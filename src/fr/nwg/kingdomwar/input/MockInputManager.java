@@ -1,5 +1,8 @@
 package fr.nwg.kingdomwar.input;
 
+import com.badlogic.gdx.math.Vector3;
+import fr.nwg.kingdomwar.component.PositionComponent;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -65,6 +68,11 @@ public class MockInputManager extends InputManager {
     @Override
     public void reset() {
 
+    }
+
+    @Override
+    public Vector3 getTouchPosition() {
+        return null;
     }
 
     public void setKeyUp(int key) {

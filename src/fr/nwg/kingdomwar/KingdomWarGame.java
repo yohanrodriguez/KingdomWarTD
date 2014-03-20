@@ -1,10 +1,8 @@
 package fr.nwg.kingdomwar;
 
 import com.badlogic.gdx.ApplicationListener;
-import fr.nwg.kingdomwar.factory.EntityFactory;
-import fr.nwg.kingdomwar.system.DrawingShapeSystem;
-import fr.nwg.kingdomwar.system.PlacingSystem;
-import fr.nwg.kingdomwar.system.PrepareProcessSystem;
+import com.badlogic.gdx.Gdx;
+import fr.nwg.kingdomwar.system.*;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class KingdomWarGame implements ApplicationListener {
@@ -17,11 +15,13 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(new PrepareProcessSystem(world), false);
         world.setSystem(new DrawingShapeSystem(world));
         world.setSystem(new PlacingSystem(world));
-        EntityFactory.createTowerEntity(world);
+        world.setSystem(new MovingBulletSystem());
+        world.setSystem(new ShootingSystem());
     }
 
     @Override
     public void render() {
+        world.setDelta(Gdx.graphics.getDeltaTime());
         world.getSystem(PrepareProcessSystem.class).process();
         world.process();
     }
