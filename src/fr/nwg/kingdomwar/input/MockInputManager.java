@@ -75,6 +75,11 @@ public class MockInputManager extends InputManager {
         return null;
     }
 
+    @Override
+    public Vector3 getCursorPosition() {
+        return null;
+    }
+
     public void setKeyUp(int key) {
         this.keyUpped = key;
     }

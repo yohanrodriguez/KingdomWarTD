@@ -16,4 +16,5 @@ public abstract class InputManager {
     public abstract boolean isKeyUp(int key);
     public abstract void reset();
     public abstract Vector3 getTouchPosition();
+    public abstract Vector3 getCursorPosition();
 }

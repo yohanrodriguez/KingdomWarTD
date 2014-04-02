@@ -1,0 +1,16 @@
+
+
+  ToDo List Kingdom Tower Defense :
+
+    - Tirer vers la souris                      DONE!
+    - Placement suivi souris                    DONE!
+    - Simulation drag and drop
+    - Grille (map)
+    - Placement sur grille
+    - Placement sur zone autorisée
+    - Détecter ennemi (zone perception) 
+    - Faire apparaitre ennemi
+    - Déplacer ennemi
+    - Tuer ennemi
+    - Ennemi gagne
+    - Scoring

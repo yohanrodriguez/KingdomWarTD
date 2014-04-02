@@ -5,26 +5,30 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import fr.nwg.kingdomwar.component.DestinationComponent;
 import fr.nwg.kingdomwar.component.PositionComponent;
+import fr.nwg.kingdomwar.component.SpeedComponent;
+import fr.nwg.kingdomwar.component.VelocityComponent;
 
 public class MovingBulletSystem extends EntityProcessingSystem {
 
     @Mapper
-    ComponentMapper<DestinationComponent> destinationComponentMapper;
+    ComponentMapper<VelocityComponent> velocityComponentMapper;
     @Mapper
     ComponentMapper<PositionComponent> positionComponentMapper;
+    @Mapper
+    ComponentMapper<SpeedComponent> speedComponentMapper;
 
     public MovingBulletSystem() {
-        super(Aspect.getAspectForAll(DestinationComponent.class, PositionComponent.class));
+        super(Aspect.getAspectForAll(VelocityComponent.class, PositionComponent.class, SpeedComponent.class));
     }
 
     @Override
     protected void process(Entity entity) {
         PositionComponent position = positionComponentMapper.get(entity);
-        DestinationComponent destination = destinationComponentMapper.get(entity);
+        VelocityComponent velocity = velocityComponentMapper.get(entity);
+        SpeedComponent speed = speedComponentMapper.get(entity);
 
-        position.x += (destination.position.x - position.x) / 100 * world.delta;
-        position.y += (destination.position.y - position.y) / 100 * world.delta;
+        position.x += velocity.x * speed.speed * world.delta / 1000;
+        position.y += velocity.y * speed.speed * world.delta / 1000;
     }
 }

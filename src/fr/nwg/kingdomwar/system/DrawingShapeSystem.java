@@ -40,7 +40,7 @@ public class DrawingShapeSystem extends EntityProcessingSystem{
         if (drawingComponent != null)
             shapeRenderer.setColor(drawingComponent.color);
 
-        shapeRenderer.rect(position.x, position.y, rectangle.width, rectangle.height);
+        shapeRenderer.rect(position.getRealPositionX(), position.getRealPositionY(), rectangle.width, rectangle.height);
     }
 
     @Override

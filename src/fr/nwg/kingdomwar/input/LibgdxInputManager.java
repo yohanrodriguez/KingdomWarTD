@@ -41,22 +41,15 @@ public class LibgdxInputManager extends InputManager {
 
     @Override
     public boolean isTouchedUp() {
-        if(touchUpped) {
-            touchUpped = false;
-            return true;
-        }
-        else
-            return false;
+        return touchUpped;
     }
 
     @Override
     public boolean isKeyUp(int key) {
-        if(keyUpped) {
-            keyUpped = false;
+        if(keyUpped)
             return lastKeyUpped == key;
-        }
-        else
-            return false;
+
+        return false;
     }
 
     @Override
@@ -67,6 +60,11 @@ public class LibgdxInputManager extends InputManager {
 
     @Override
     public Vector3 getTouchPosition() {
+        return new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+    }
+
+    @Override
+    public Vector3 getCursorPosition() {
         return new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     }
 

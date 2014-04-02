@@ -34,7 +34,6 @@ public class ShootingSystem extends DelayedEntityProcessingSystem{
     protected void processDelta(Entity entity, float delta) {
         FiringRateComponent firingRateComponent = firingRateComponentMapper.get(entity);
         firingRateComponent.delay -= delta;
-        System.out.println("delta " + entity.toString() + " delay = " + firingRateComponent.delay);
     }
 
     @Override
@@ -42,6 +41,8 @@ public class ShootingSystem extends DelayedEntityProcessingSystem{
         PositionComponent position = positionComponentMapper.getSafe(entity);
         AimingComponent aiming = aimingComponentMapper.get(entity);
         EntityFactory.createBullet((KingdomWarWorld) world, position, aiming);
-        System.out.println("tir " + entity.toString());
+        FiringRateComponent firingRateComponent = firingRateComponentMapper.get(entity);
+        firingRateComponent.resetDelay();
+        this.offerDelay(firingRateComponent.delay);
     }
 }
