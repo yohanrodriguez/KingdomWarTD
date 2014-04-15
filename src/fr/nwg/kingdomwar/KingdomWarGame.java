@@ -3,11 +3,11 @@ package fr.nwg.kingdomwar;
 import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import fr.nwg.kingdomwar.component.CursorListenerComponent;
 import fr.nwg.kingdomwar.component.PositionComponent;
 import fr.nwg.kingdomwar.factory.EntityFactory;
+import fr.nwg.kingdomwar.listener.InputListener;
 import fr.nwg.kingdomwar.system.*;
+import fr.nwg.kingdomwar.system.listener.TouchUpListenerSystem;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class KingdomWarGame implements ApplicationListener {
@@ -24,11 +24,24 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(new AimingUpdateSystem(world));
         world.setSystem(new ShootingSystem());
         world.setSystem(new UpdatePositionFromCursorPositionListenersSystem(world));
+        world.setSystem(new TimeToLiveSystem());
+
+        world.setSystem(new RemoveEntityFromWorldSystem());
+
+        TouchUpListenerSystem touchUpListenerSystem = new TouchUpListenerSystem();
+        world.setSystem(touchUpListenerSystem, false);
+
+        InputListener inputListener = new InputListener(touchUpListenerSystem, mouseMovedListenerSystem);
+        Gdx.input.setInputProcessor(inputListener);
 
         Entity cursorEntity = EntityFactory.createCursorEntity(world);
         PositionComponent cursorPosition = cursorEntity.getComponent(PositionComponent.class);
 
         EntityFactory.createEntityPlacementShape(world, cursorPosition);
+        Entity grid = EntityFactory.createGrid(world, 10, 10);
+        EntityFactory.createCellsFromGrid(world, grid);
+        //ItemMenuFactory.createTowerMenuButton(world);
+
     }
 
     @Override
@@ -36,6 +49,7 @@ public class KingdomWarGame implements ApplicationListener {
         world.setDelta(Gdx.graphics.getDeltaTime() * 1000);
         world.getSystem(PrepareProcessSystem.class).process();
         world.process();
+        //System.out.println("nbr d'entités = " + world.getManager(EntityManager.class).getActiveEntityCount());
     }
 
     @Override

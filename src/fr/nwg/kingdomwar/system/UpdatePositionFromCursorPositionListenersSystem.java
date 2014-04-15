@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import fr.nwg.kingdomwar.component.CursorListenerComponent;
 import fr.nwg.kingdomwar.component.PositionComponent;
-import fr.nwg.kingdomwar.input.InputManager;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class UpdatePositionFromCursorPositionListenersSystem extends EntityProcessingSystem {
@@ -17,7 +16,6 @@ public class UpdatePositionFromCursorPositionListenersSystem extends EntityProce
     @Mapper
     ComponentMapper<PositionComponent> positionComponentMapper;
 
-    private InputManager inputManager;
     private OrthographicCamera camera;
 
     public UpdatePositionFromCursorPositionListenersSystem(KingdomWarWorld kingdomWarWorld) {

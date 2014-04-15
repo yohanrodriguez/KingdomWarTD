@@ -27,24 +27,25 @@ public class DrawingShapeSystem extends EntityProcessingSystem{
     }
 
     @Override
-    protected void begin() {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-    }
-
-    @Override
     protected void process(Entity entity) {
         SizeComponent rectangle = rectangleComponentMapper.get(entity);
         DrawingComponent drawingComponent = drawingComponentMapper.get(entity);
         PositionComponent position = positionComponentMapper.get(entity);
 
-        if (drawingComponent != null)
+        if (drawingComponent != null) {
             shapeRenderer.setColor(drawingComponent.color);
+            if(drawingComponent.shapeType != null)
+                shapeRenderer.begin(drawingComponent.shapeType);
+            else
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        }
 
         shapeRenderer.rect(position.getRealPositionX(), position.getRealPositionY(), rectangle.width, rectangle.height);
+        shapeRenderer.end();
     }
 
     @Override
     protected void end() {
-        shapeRenderer.end();
+
     }
 }

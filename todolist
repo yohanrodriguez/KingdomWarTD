@@ -4,9 +4,9 @@
 
     - Tirer vers la souris                      DONE!
     - Placement suivi souris                    DONE!
-    - Simulation drag and drop
-    - Grille (map)
-    - Placement sur grille
+    - Simulation drag and drop                  IN PROGRESS!
+    - Grille (map)                              DONE!
+    - Placement sur grille                      ...
     - Placement sur zone autorisée
     - Détecter ennemi (zone perception) 
     - Faire apparaitre ennemi
@@ -14,3 +14,4 @@
     - Tuer ennemi
     - Ennemi gagne
     - Scoring
+    - Compatibilité Android                     DONE!
