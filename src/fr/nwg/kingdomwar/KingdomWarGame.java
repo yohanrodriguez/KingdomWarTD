@@ -43,7 +43,7 @@ public class KingdomWarGame implements ApplicationListener {
         PositionComponent cursorPosition = cursorEntity.getComponent(PositionComponent.class);
 
         EntityFactory.createEntityPlacementShape(world, cursorPosition);
-        Entity grid = EntityFactory.createGrid(world, 10, 10);
+        Entity grid = EntityFactory.createGrid(world, Constants.GRID_ROWS, Constants.GRID_COLUMNS);
         EntityFactory.createCellsFromGrid(world, grid);
         //ItemMenuFactory.createTowerMenuButton(world);
 

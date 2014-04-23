@@ -24,8 +24,8 @@ public class PlacingSystem extends VoidEntitySystem implements TouchedUpSystemLi
         camera.unproject(positionVector);
         Entity tower = EntityFactory.createTowerEntity((KingdomWarWorld) world, positionVector);
         tower.changedInWorld();
-        System.out.println("coucou");
     }
+
 
     @Override
     protected boolean checkProcessing() {

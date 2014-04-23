@@ -7,12 +7,16 @@ import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.component.*;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
+import static fr.nwg.kingdomwar.Constants.GRID_COLUMNS;
+import static fr.nwg.kingdomwar.Constants.GRID_ROWS;
+
 public class EntityFactory {
     public static Entity createTowerEntity(KingdomWarWorld world, Vector3 position) {
         Entity tower = world.createEntity();
-        tower.addComponent(new PositionComponent(position, -25, -25));
+        SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
+        tower.addComponent(size);
+        tower.addComponent(new PositionComponent(position, -((size.width)/2), -((size.height)/2)));
         tower.addComponent(new DrawingComponent(255, 255, 255, 1));
-        tower.addComponent(new SizeComponent(50, 50));
         tower.addComponent(new InputComponent());
         tower.addComponent(new AimingComponent(new PositionComponent()));
         tower.addComponent(new FiringRateComponent(100));
@@ -22,9 +26,10 @@ public class EntityFactory {
 
     public static Entity createBullet(KingdomWarWorld world, PositionComponent position, AimingComponent aiming) {
         Entity bullet = world.createEntity();
+        SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
         bullet.addComponent(new DrawingComponent(255, 0, 0, 1));
         bullet.addComponent(new SizeComponent(5, 5));
-        PositionComponent positionComponent = new PositionComponent(position, 25, 25);
+        PositionComponent positionComponent = new PositionComponent(position, size.width/2, size.height/2);
         positionComponent.origin = position;
         bullet.addComponent(positionComponent);
         bullet.addComponent(new SpeedComponent(500));
@@ -36,10 +41,11 @@ public class EntityFactory {
 
     public static Entity createEntityPlacementShape(KingdomWarWorld world, PositionComponent cursorPosition) {
         Entity placementShape = world.createEntity();
+        SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
         placementShape.addComponent(new DrawingComponent(1, 1, 1, 1));
-        placementShape.addComponent(new SizeComponent(50, 50));
+        placementShape.addComponent(size);
 
-        PositionComponent positionComponent = new PositionComponent(cursorPosition, -25, -25);
+        PositionComponent positionComponent = new PositionComponent(cursorPosition, -size.width/2, -size.height/2);
 
         placementShape.addComponent(positionComponent);
         placementShape.addToWorld();
