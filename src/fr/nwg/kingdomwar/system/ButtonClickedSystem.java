@@ -7,12 +7,9 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import fr.nwg.kingdomwar.component.ButtonComponent;
 import fr.nwg.kingdomwar.component.ListenerComponent;
 import fr.nwg.kingdomwar.component.PositionComponent;
 import fr.nwg.kingdomwar.component.SizeComponent;
-import fr.nwg.kingdomwar.input.InputManager;
-import fr.nwg.kingdomwar.listener.Listener;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class ButtonClickedSystem extends EntityProcessingSystem {

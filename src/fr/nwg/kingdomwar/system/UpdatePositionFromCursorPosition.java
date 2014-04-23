@@ -9,27 +9,36 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import fr.nwg.kingdomwar.component.CursorListenerComponent;
 import fr.nwg.kingdomwar.component.PositionComponent;
+import fr.nwg.kingdomwar.listener.system.MouseMovedSystemListener;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
-public class UpdatePositionFromCursorPositionListenersSystem extends EntityProcessingSystem {
+public class UpdatePositionFromCursorPosition extends EntityProcessingSystem implements MouseMovedSystemListener {
 
     @Mapper
     ComponentMapper<PositionComponent> positionComponentMapper;
 
     private OrthographicCamera camera;
+    private int x;
+    private int y;
 
-    public UpdatePositionFromCursorPositionListenersSystem(KingdomWarWorld kingdomWarWorld) {
+    public UpdatePositionFromCursorPosition(KingdomWarWorld kingdomWarWorld) {
         super(Aspect.getAspectForAll(PositionComponent.class, CursorListenerComponent.class));
-        inputManager = kingdomWarWorld.getInputManager();
         camera = kingdomWarWorld.getCamera();
     }
 
     @Override
     protected void process(Entity entity) {
         PositionComponent position = positionComponentMapper.get(entity);
-        Vector3 cursorPosition = inputManager.getCursorPosition();
+        Vector3 cursorPosition = new Vector3(x, y, 0);
         camera.unproject(cursorPosition);
         position.x = cursorPosition.x;
         position.y = cursorPosition.y;
+    }
+
+    @Override
+    public void mouseMoved(int i, int i2) {
+        this.x = i;
+        this.y = i2;
+        this.process();
     }
 }

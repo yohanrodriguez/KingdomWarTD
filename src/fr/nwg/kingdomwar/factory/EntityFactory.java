@@ -1,14 +1,10 @@
 package fr.nwg.kingdomwar.factory;
 
-import com.artemis.Component;
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.sun.xml.internal.fastinfoset.algorithm.BuiltInEncodingAlgorithm;
 import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.component.*;
-import fr.nwg.kingdomwar.component.listener.MouseMovedListenerComponent;
-import fr.nwg.kingdomwar.listener.UpdatePositionComponentListener;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class EntityFactory {
@@ -56,7 +52,6 @@ public class EntityFactory {
         cursor.addComponent(new CursorListenerComponent());
         PositionComponent cursorPosition = new PositionComponent();
         cursor.addComponent(cursorPosition);
-        cursor.addComponent(new MouseMovedListenerComponent(new UpdatePositionComponentListener()));
         cursor.addToWorld();
         return cursor;
     }

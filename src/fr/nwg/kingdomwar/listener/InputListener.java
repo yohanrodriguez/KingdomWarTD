@@ -1,21 +1,57 @@
 package fr.nwg.kingdomwar.listener;
 
+import com.artemis.EntitySystem;
+import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.InputProcessor;
-import fr.nwg.kingdomwar.system.listener.MouseMovedListenerSystem;
-import fr.nwg.kingdomwar.system.listener.TouchUpListenerSystem;
+import fr.nwg.kingdomwar.listener.system.KeyDownSystemListener;
+import fr.nwg.kingdomwar.listener.system.MouseMovedSystemListener;
+import fr.nwg.kingdomwar.listener.system.TouchedUpSystemListener;
 
-public class InputListener implements InputProcessor{
+import java.util.ArrayList;
+import java.util.List;
 
-    private TouchUpListenerSystem touchUpListenerSystem;
-    private MouseMovedListenerSystem mouseMovedListenerSystem;
+public class InputListener implements InputProcessor {
 
-    public InputListener(TouchUpListenerSystem touchUpListenerSystem, MouseMovedListenerSystem mouseMovedListenerSystem) {
-        this.touchUpListenerSystem = touchUpListenerSystem;
-        this.mouseMovedListenerSystem = mouseMovedListenerSystem;
+    private List<KeyDownSystemListener> keyDownSystemListeners;
+    private List<MouseMovedSystemListener> mouseMovedSystemListeners;
+    private List<TouchedUpSystemListener> touchedUpSystemListeners;
+
+    public InputListener() {
+        keyDownSystemListeners = new ArrayList<KeyDownSystemListener>();
+        mouseMovedSystemListeners = new ArrayList<MouseMovedSystemListener>();
+        touchedUpSystemListeners = new ArrayList<TouchedUpSystemListener>();
+    }
+
+    public void register(Object systemListener) {
+
+        if (systemListener instanceof KeyDownSystemListener)
+            keyDownSystemListeners.add((KeyDownSystemListener) systemListener);
+
+        if (systemListener instanceof MouseMovedSystemListener)
+            mouseMovedSystemListeners.add((MouseMovedSystemListener) systemListener);
+
+        if (systemListener instanceof TouchedUpSystemListener)
+            touchedUpSystemListeners.add((TouchedUpSystemListener) systemListener);
+
+    }
+
+    public void remove(Object systemListener) {
+
+        if (systemListener instanceof KeyDownSystemListener)
+            keyDownSystemListeners.remove(systemListener);
+
+        if (systemListener instanceof MouseMovedSystemListener)
+            mouseMovedSystemListeners.remove(systemListener);
+
+        if (systemListener instanceof TouchedUpSystemListener)
+            touchedUpSystemListeners.remove(systemListener);
+
     }
 
     @Override
     public boolean keyDown(int i) {
+        for (KeyDownSystemListener keyDownSystemListener : keyDownSystemListeners)
+            keyDownSystemListener.keyDown(i);
         return false;
     }
 
@@ -36,7 +72,8 @@ public class InputListener implements InputProcessor{
 
     @Override
     public boolean touchUp(int i, int i2, int i3, int i4) {
-        touchUpListenerSystem.process(i, i2, i3, i4);
+        for (TouchedUpSystemListener touchedUpSystemListener : touchedUpSystemListeners)
+            touchedUpSystemListener.touchUp(i, i2, i3, i4);
         return false;
     }
 
@@ -46,8 +83,9 @@ public class InputListener implements InputProcessor{
     }
 
     @Override
-    public boolean mouseMoved(int x, int y) {
-        mouseMovedListenerSystem.process(x, y);
+    public boolean mouseMoved(int i, int i2) {
+        for (MouseMovedSystemListener mouseMovedSystemListener : mouseMovedSystemListeners)
+            mouseMovedSystemListener.mouseMoved(i, i2);
         return false;
     }
 

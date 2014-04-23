@@ -1,13 +1,13 @@
 package fr.nwg.kingdomwar;
 
 import com.artemis.Entity;
+import com.artemis.EntityManager;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import fr.nwg.kingdomwar.component.PositionComponent;
 import fr.nwg.kingdomwar.factory.EntityFactory;
 import fr.nwg.kingdomwar.listener.InputListener;
 import fr.nwg.kingdomwar.system.*;
-import fr.nwg.kingdomwar.system.listener.TouchUpListenerSystem;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class KingdomWarGame implements ApplicationListener {
@@ -19,20 +19,25 @@ public class KingdomWarGame implements ApplicationListener {
         world.initialize();
         world.setSystem(new PrepareProcessSystem(world), false);
         world.setSystem(new DrawingShapeSystem(world));
-        world.setSystem(new PlacingSystem(world));
         world.setSystem(new MovingBulletSystem());
-        world.setSystem(new AimingUpdateSystem(world));
         world.setSystem(new ShootingSystem());
-        world.setSystem(new UpdatePositionFromCursorPositionListenersSystem(world));
         world.setSystem(new TimeToLiveSystem());
 
         world.setSystem(new RemoveEntityFromWorldSystem());
 
-        TouchUpListenerSystem touchUpListenerSystem = new TouchUpListenerSystem();
-        world.setSystem(touchUpListenerSystem, false);
+        PlacingSystem placingSystem = new PlacingSystem(world);
+        world.setSystem(placingSystem, false);
+        AimingUpdateSystem aimingUpdateSystem = new AimingUpdateSystem(world);
+        world.setSystem(aimingUpdateSystem, false);
+        UpdatePositionFromCursorPosition updatePositionFromCursorPosition = new UpdatePositionFromCursorPosition(world);
+        world.setSystem(updatePositionFromCursorPosition, false);
 
-        InputListener inputListener = new InputListener(touchUpListenerSystem, mouseMovedListenerSystem);
+        InputListener inputListener = new InputListener();
         Gdx.input.setInputProcessor(inputListener);
+
+        inputListener.register(updatePositionFromCursorPosition);
+        inputListener.register(aimingUpdateSystem);
+        inputListener.register(placingSystem);
 
         Entity cursorEntity = EntityFactory.createCursorEntity(world);
         PositionComponent cursorPosition = cursorEntity.getComponent(PositionComponent.class);
