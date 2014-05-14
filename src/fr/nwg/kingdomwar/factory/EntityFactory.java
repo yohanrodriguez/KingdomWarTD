@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.component.*;
+import fr.nwg.kingdomwar.listener.AreaClickListenerComponent;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
-import static fr.nwg.kingdomwar.Constants.GRID_COLUMNS;
-import static fr.nwg.kingdomwar.Constants.GRID_ROWS;
+import static fr.nwg.kingdomwar.Constants.*;
 
 public class EntityFactory {
     public static Entity createTowerEntity(KingdomWarWorld world, Vector3 position) {
@@ -66,6 +66,8 @@ public class EntityFactory {
         Entity grid = world.createEntity();
         grid.addComponent(new RowsComponent(rows));
         grid.addComponent(new ColumnsComponent(columns));
+
+        grid.addComponent(new AreaClickListenerComponent(new PositionComponent(), new SizeComponent((int)WORLD_WIDTH / 2, (int)WORLD_HEIGHT / 2)));
 
         grid.addToWorld();
         return grid;

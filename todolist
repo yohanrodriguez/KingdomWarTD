@@ -4,13 +4,13 @@
 
     - Tirer vers la souris                      DONE!
     - Placement suivi souris                    DONE!
-    - Simulation drag and drop                  IN PROGRESS!
+    - Simulation drag and drop
     - Grille (map)                              DONE!
-    - Placement sur grille                      ...
+    - Placement sur grille
     - Placement sur zone autorisée
-    - Détecter ennemi (zone perception) 
-    - Faire apparaitre ennemi
+    - Faire apparaitre ennemi                   IN PROGRESS...
     - Déplacer ennemi
+    - Détecter ennemi (zone perception)
     - Tuer ennemi
     - Ennemi gagne
     - Scoring

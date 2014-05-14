@@ -31,6 +31,8 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(aimingUpdateSystem, false);
         UpdatePositionFromCursorPosition updatePositionFromCursorPosition = new UpdatePositionFromCursorPosition(world);
         world.setSystem(updatePositionFromCursorPosition, false);
+        GridClickSytem gridClickSytem = new GridClickSytem();
+        world.setSystem(gridClickSytem, false);
 
         InputListener inputListener = new InputListener();
         Gdx.input.setInputProcessor(inputListener);
@@ -38,6 +40,7 @@ public class KingdomWarGame implements ApplicationListener {
         inputListener.register(updatePositionFromCursorPosition);
         inputListener.register(aimingUpdateSystem);
         inputListener.register(placingSystem);
+        inputListener.register(gridClickSytem);
 
         Entity cursorEntity = EntityFactory.createCursorEntity(world);
         PositionComponent cursorPosition = cursorEntity.getComponent(PositionComponent.class);
