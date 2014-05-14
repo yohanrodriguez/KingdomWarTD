@@ -5,8 +5,8 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.DelayedEntityProcessingSystem;
-import fr.nwg.kingdomwar.component.DeadEntityComponent;
-import fr.nwg.kingdomwar.component.TimeToLiveComponent;
+import fr.nwg.kingdomwar.component.misc.DeadEntityComponent;
+import fr.nwg.kingdomwar.component.misc.TimeToLiveComponent;
 
 public class TimeToLiveSystem extends DelayedEntityProcessingSystem {
 

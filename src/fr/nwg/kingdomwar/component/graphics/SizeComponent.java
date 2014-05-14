@@ -1,7 +1,7 @@
-package fr.nwg.kingdomwar.component;
+package fr.nwg.kingdomwar.component.graphics;
 
 import com.artemis.Component;
-import com.badlogic.gdx.math.Rectangle;
+import fr.nwg.kingdomwar.component.physic.PositionComponent;
 
 public class SizeComponent extends Component{
 
@@ -12,4 +12,5 @@ public class SizeComponent extends Component{
         this.width = width;
         this.height = height;
     }
+
 }

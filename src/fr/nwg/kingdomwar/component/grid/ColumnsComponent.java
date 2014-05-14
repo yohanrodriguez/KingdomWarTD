@@ -1,4 +1,4 @@
-package fr.nwg.kingdomwar.component;
+package fr.nwg.kingdomwar.component.grid;
 
 import com.artemis.Component;
 

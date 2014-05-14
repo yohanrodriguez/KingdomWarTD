@@ -1,4 +1,4 @@
-package fr.nwg.kingdomwar.component;
+package fr.nwg.kingdomwar.component.physic;
 
 import com.artemis.Component;
 import com.badlogic.gdx.math.Vector3;

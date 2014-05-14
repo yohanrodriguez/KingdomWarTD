@@ -1,14 +1,13 @@
 package fr.nwg.kingdomwar.system;
 
 import com.artemis.Aspect;
-import com.artemis.Component;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.DelayedEntityProcessingSystem;
-import fr.nwg.kingdomwar.component.AimingComponent;
-import fr.nwg.kingdomwar.component.FiringRateComponent;
-import fr.nwg.kingdomwar.component.PositionComponent;
+import fr.nwg.kingdomwar.component.tower.AimingComponent;
+import fr.nwg.kingdomwar.component.tower.FiringRateComponent;
+import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EntityFactory;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 

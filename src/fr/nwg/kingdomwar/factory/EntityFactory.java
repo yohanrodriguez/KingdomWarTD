@@ -4,7 +4,17 @@ import com.artemis.Entity;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import fr.nwg.kingdomwar.Constants;
-import fr.nwg.kingdomwar.component.*;
+import fr.nwg.kingdomwar.component.graphics.DrawingComponent;
+import fr.nwg.kingdomwar.component.graphics.SizeComponent;
+import fr.nwg.kingdomwar.component.misc.TimeToLiveComponent;
+import fr.nwg.kingdomwar.component.physic.PositionComponent;
+import fr.nwg.kingdomwar.component.physic.SpeedComponent;
+import fr.nwg.kingdomwar.component.physic.VelocityComponent;
+import fr.nwg.kingdomwar.component.tower.AimingComponent;
+import fr.nwg.kingdomwar.component.grid.ColumnsComponent;
+import fr.nwg.kingdomwar.component.grid.GridPosititionComponent;
+import fr.nwg.kingdomwar.component.grid.RowsComponent;
+import fr.nwg.kingdomwar.component.tower.FiringRateComponent;
 import fr.nwg.kingdomwar.listener.AreaClickListenerComponent;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
@@ -17,7 +27,6 @@ public class EntityFactory {
         tower.addComponent(size);
         tower.addComponent(new PositionComponent(position, -((size.width)/2), -((size.height)/2)));
         tower.addComponent(new DrawingComponent(255, 255, 255, 1));
-        tower.addComponent(new InputComponent());
         tower.addComponent(new AimingComponent(new PositionComponent()));
         tower.addComponent(new FiringRateComponent(100));
         tower.addToWorld();
@@ -55,7 +64,6 @@ public class EntityFactory {
 
     public static Entity createCursorEntity(KingdomWarWorld world) {
         Entity cursor = world.createEntity();
-        cursor.addComponent(new CursorListenerComponent());
         PositionComponent cursorPosition = new PositionComponent();
         cursor.addComponent(cursorPosition);
         cursor.addToWorld();

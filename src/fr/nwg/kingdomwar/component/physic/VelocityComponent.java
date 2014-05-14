@@ -1,8 +1,8 @@
-package fr.nwg.kingdomwar.component;
+package fr.nwg.kingdomwar.component.physic;
 
 import com.artemis.Component;
 
-    public class VelocityComponent extends Component {
+public class VelocityComponent extends Component {
 
     public float x;
     public float y;

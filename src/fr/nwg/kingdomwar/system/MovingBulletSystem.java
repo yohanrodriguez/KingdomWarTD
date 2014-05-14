@@ -5,9 +5,9 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import fr.nwg.kingdomwar.component.PositionComponent;
-import fr.nwg.kingdomwar.component.SpeedComponent;
-import fr.nwg.kingdomwar.component.VelocityComponent;
+import fr.nwg.kingdomwar.component.physic.PositionComponent;
+import fr.nwg.kingdomwar.component.physic.SpeedComponent;
+import fr.nwg.kingdomwar.component.physic.VelocityComponent;
 
 public class MovingBulletSystem extends EntityProcessingSystem {
 

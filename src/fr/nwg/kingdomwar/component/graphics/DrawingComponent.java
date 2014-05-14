@@ -1,4 +1,4 @@
-package fr.nwg.kingdomwar.component;
+package fr.nwg.kingdomwar.component.graphics;
 
 import com.artemis.Component;
 import com.badlogic.gdx.graphics.Color;

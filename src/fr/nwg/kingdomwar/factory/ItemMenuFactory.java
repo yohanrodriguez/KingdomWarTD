@@ -2,10 +2,10 @@ package fr.nwg.kingdomwar.factory;
 
 import com.artemis.Entity;
 import com.artemis.World;
-import fr.nwg.kingdomwar.component.ButtonComponent;
-import fr.nwg.kingdomwar.component.DrawingComponent;
-import fr.nwg.kingdomwar.component.PositionComponent;
-import fr.nwg.kingdomwar.component.SizeComponent;
+import fr.nwg.kingdomwar.component.misc.ButtonComponent;
+import fr.nwg.kingdomwar.component.graphics.DrawingComponent;
+import fr.nwg.kingdomwar.component.physic.PositionComponent;
+import fr.nwg.kingdomwar.component.graphics.SizeComponent;
 
 public class ItemMenuFactory {
 

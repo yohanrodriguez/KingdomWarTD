@@ -1,8 +1,8 @@
 package fr.nwg.kingdomwar.listener;
 
 import com.artemis.Component;
-import fr.nwg.kingdomwar.component.PositionComponent;
-import fr.nwg.kingdomwar.component.SizeComponent;
+import fr.nwg.kingdomwar.component.physic.PositionComponent;
+import fr.nwg.kingdomwar.component.graphics.SizeComponent;
 
 public class AreaClickListenerComponent extends Component {
 
