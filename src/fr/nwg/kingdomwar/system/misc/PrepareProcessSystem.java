@@ -1,4 +1,4 @@
-package fr.nwg.kingdomwar.system;
+package fr.nwg.kingdomwar.system.misc;
 
 import com.artemis.systems.VoidEntitySystem;
 import com.badlogic.gdx.Gdx;

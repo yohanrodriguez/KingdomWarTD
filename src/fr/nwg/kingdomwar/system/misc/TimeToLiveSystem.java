@@ -1,4 +1,4 @@
-package fr.nwg.kingdomwar.system;
+package fr.nwg.kingdomwar.system.misc;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;

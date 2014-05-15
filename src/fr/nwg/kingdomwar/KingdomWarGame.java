@@ -7,8 +7,14 @@ import com.badlogic.gdx.InputMultiplexer;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EnemyFactory;
 import fr.nwg.kingdomwar.factory.EntityFactory;
-import fr.nwg.kingdomwar.input.UpdateCursorPositionInputProcessor;
-import fr.nwg.kingdomwar.system.*;
+import fr.nwg.kingdomwar.input.UpdateMouseMovedInputProcessor;
+import fr.nwg.kingdomwar.system.foes.AddEnemySystem;
+import fr.nwg.kingdomwar.system.graphics.DrawingShapeSystem;
+import fr.nwg.kingdomwar.system.misc.PrepareProcessSystem;
+import fr.nwg.kingdomwar.system.misc.RemoveEntityFromWorldSystem;
+import fr.nwg.kingdomwar.system.misc.TimeToLiveSystem;
+import fr.nwg.kingdomwar.system.tower.MovingBulletSystem;
+import fr.nwg.kingdomwar.system.tower.ShootingSystem;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class KingdomWarGame implements ApplicationListener {
@@ -37,7 +43,7 @@ public class KingdomWarGame implements ApplicationListener {
 
         //input
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(new UpdateCursorPositionInputProcessor(world.getCamera(), cursorPosition));
+        inputMultiplexer.addProcessor(new UpdateMouseMovedInputProcessor(world.getCamera(), cursorPosition));
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         //Cells

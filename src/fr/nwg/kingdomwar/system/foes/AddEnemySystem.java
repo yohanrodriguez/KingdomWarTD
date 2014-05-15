@@ -1,4 +1,4 @@
-package fr.nwg.kingdomwar.system;
+package fr.nwg.kingdomwar.system.foes;
 
 import com.artemis.systems.VoidEntitySystem;
 import fr.nwg.kingdomwar.factory.EnemyFactory;

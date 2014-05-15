@@ -5,14 +5,13 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
-import javafx.scene.Camera;
 
-public class UpdateCursorPositionInputProcessor implements InputProcessor {
+public class UpdateMouseMovedInputProcessor implements InputProcessor {
 
     private OrthographicCamera camera;
     private PositionComponent position;
 
-    public UpdateCursorPositionInputProcessor(OrthographicCamera camera, PositionComponent positionComponent) {
+    public UpdateMouseMovedInputProcessor(OrthographicCamera camera, PositionComponent positionComponent) {
         this.camera = camera;
         this.position = positionComponent;
     }

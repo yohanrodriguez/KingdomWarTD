@@ -1,4 +1,4 @@
-package fr.nwg.kingdomwar.system;
+package fr.nwg.kingdomwar.system.tower;
 
 import com.artemis.Entity;
 import com.artemis.systems.VoidEntitySystem;
