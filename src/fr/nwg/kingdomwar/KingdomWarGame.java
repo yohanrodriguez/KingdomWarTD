@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
+import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EnemyFactory;
 import fr.nwg.kingdomwar.factory.EntityFactory;
 import fr.nwg.kingdomwar.input.MyInputProcessor;
@@ -40,13 +41,15 @@ public class KingdomWarGame implements ApplicationListener {
 
 
         Entity inputEntity = EntityFactory.createInputEntity(world);
-        CursorPositionComponent cursorPosition = inputEntity.getComponent(CursorPositionComponent.class);
+        PositionComponent cursorPosition = inputEntity.getComponent(CursorPositionComponent.class).position;
 
         //input
-        Gdx.input.setInputProcessor(new MyInputProcessor(world.getCamera(), inputEntity));
+        MyInputProcessor inputProcessor = new MyInputProcessor(world.getCamera(), cursorPosition);
+        inputProcessor.addTouchedUpListener(inputEntity);
+        Gdx.input.setInputProcessor(inputProcessor);
 
         //Cells
-        EntityFactory.createEntityPlacementShape(world, cursorPosition.position);
+        EntityFactory.createEntityPlacementShape(world, cursorPosition);
         Entity grid = EntityFactory.createGrid(world, Constants.GRID_ROWS, Constants.GRID_COLUMNS);
         EntityFactory.createCellsFromGrid(world, grid);
 

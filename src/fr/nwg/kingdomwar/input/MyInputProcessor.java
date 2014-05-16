@@ -8,16 +8,23 @@ import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
 import fr.nwg.kingdomwar.component.input.TouchedUpComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyInputProcessor implements InputProcessor {
 
     private OrthographicCamera camera;
-    private Entity inputEntity;
     private PositionComponent cursorPosition;
+    private List<Entity> touchedUpListeners;
 
-    public MyInputProcessor(OrthographicCamera camera, Entity inputEntity) {
+    public MyInputProcessor(OrthographicCamera camera, PositionComponent cursorPosition) {
         this.camera = camera;
-        this.inputEntity = inputEntity;
-        this.cursorPosition = inputEntity.getComponent(CursorPositionComponent.class).position;
+        this.cursorPosition = cursorPosition;
+        touchedUpListeners = new ArrayList<Entity>();
+    }
+
+    public void addTouchedUpListener(Entity entity) {
+        touchedUpListeners.add(entity);
     }
 
     @Override
@@ -43,8 +50,10 @@ public class MyInputProcessor implements InputProcessor {
     @Override
     public boolean touchUp(int x, int y, int i3, int i4) {
         Vector3 victor = victorize(x, y);
-        inputEntity.addComponent(new TouchedUpComponent(victor.x, victor.y, i3, i4));
-        inputEntity.changedInWorld();
+        for(Entity entity : touchedUpListeners) {
+            entity.addComponent(new TouchedUpComponent(victor.x, victor.y, i3, i4));
+            entity.changedInWorld();
+        }
         return false;
     }
 
