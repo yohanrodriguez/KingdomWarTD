@@ -1,25 +1,35 @@
 package fr.nwg.kingdomwar.system.tower;
 
+import com.artemis.Aspect;
+import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.artemis.systems.VoidEntitySystem;
+import com.artemis.annotations.Mapper;
+import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
+import fr.nwg.kingdomwar.component.input.TouchedUpComponent;
+import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EntityFactory;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
-public class PlacingSystem extends VoidEntitySystem {
+public class PlacingSystem extends EntityProcessingSystem {
 
-    private final OrthographicCamera camera;
+    @Mapper
+    private ComponentMapper<TouchedUpComponent> touchedUpComponentMapper;
+    //Temp following cursor
+    @Mapper
+    private ComponentMapper<CursorPositionComponent> cursorPositionComponentMapper;
 
-    public PlacingSystem(KingdomWarWorld kingdomWarWorld) {
-        camera = kingdomWarWorld.getCamera();
+    public PlacingSystem() {
+        super(Aspect.getAspectForAll(TouchedUpComponent.class, CursorPositionComponent.class));
     }
 
     @Override
-    protected void processSystem() {
-//        Vector3 positionVector = new Vector3(this.x, this.y, 0);
-//        camera.unproject(positionVector);
-//        Entity tower = EntityFactory.createTowerEntity((KingdomWarWorld) world, positionVector);
+    protected void process(Entity entity) {
+        PositionComponent touchedUpPosition = touchedUpComponentMapper.get(entity).position;
+        PositionComponent cursorPosition = cursorPositionComponentMapper.get(entity).position;
+        Entity tower = EntityFactory.createTowerEntity((KingdomWarWorld) world, touchedUpPosition.getVector3(), cursorPosition);
 //        tower.changedInWorld();
     }
 }

@@ -52,4 +52,8 @@ public class PositionComponent extends Component {
             return y;
         return origin.getRealPositionY() + y;
     }
+
+    public Vector3 getVector3() {
+        return new Vector3(x, y, 0);
+    }
 }

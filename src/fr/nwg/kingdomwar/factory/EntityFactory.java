@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.component.graphics.DrawingComponent;
 import fr.nwg.kingdomwar.component.graphics.SizeComponent;
+import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
 import fr.nwg.kingdomwar.component.misc.TimeToLiveComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.component.physic.SpeedComponent;
@@ -21,13 +22,13 @@ import fr.nwg.kingdomwar.world.KingdomWarWorld;
 import static fr.nwg.kingdomwar.Constants.*;
 
 public class EntityFactory {
-    public static Entity createTowerEntity(KingdomWarWorld world, Vector3 position) {
+    public static Entity createTowerEntity(KingdomWarWorld world, Vector3 position, PositionComponent aimingPosition) {
         Entity tower = world.createEntity();
         SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
         tower.addComponent(size);
         tower.addComponent(new PositionComponent(position, -((size.width)/2), -((size.height)/2)));
         tower.addComponent(new DrawingComponent(255, 255, 255, 1));
-        tower.addComponent(new AimingComponent(new PositionComponent()));
+        tower.addComponent(new AimingComponent(aimingPosition));
         tower.addComponent(new FiringRateComponent(100));
         tower.addToWorld();
         return tower;
@@ -62,12 +63,12 @@ public class EntityFactory {
         return placementShape;
     }
 
-    public static Entity createCursorEntity(KingdomWarWorld world) {
-        Entity cursor = world.createEntity();
-        PositionComponent cursorPosition = new PositionComponent();
-        cursor.addComponent(cursorPosition);
-        cursor.addToWorld();
-        return cursor;
+    public static Entity createInputEntity(KingdomWarWorld world) {
+        Entity input = world.createEntity();
+        CursorPositionComponent cursorPosition = new CursorPositionComponent();
+        input.addComponent(cursorPosition);
+        input.addToWorld();
+        return input;
     }
 
     public static Entity createGrid(KingdomWarWorld world, int rows, int columns) {
