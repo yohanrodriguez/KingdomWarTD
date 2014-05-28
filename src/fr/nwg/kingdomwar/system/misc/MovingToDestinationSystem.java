@@ -5,6 +5,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
+import fr.nwg.kingdomwar.component.DestinationReachedComponent;
 import fr.nwg.kingdomwar.component.misc.DestinationComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.component.physic.SpeedComponent;
@@ -24,7 +25,6 @@ public class MovingToDestinationSystem extends EntityProcessingSystem {
     ComponentMapper<SpeedComponent> speedComponentMapper;
     @Mapper
     ComponentMapper<DestinationComponent> destinationComponentMapper;
-    private List<MovingEntityListener> listeners = new ArrayList<MovingEntityListener>();
 
     public MovingToDestinationSystem() {
         super(Aspect.getAspectForAll(PositionComponent.class, SpeedComponent.class, DestinationComponent.class));
@@ -32,34 +32,27 @@ public class MovingToDestinationSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-
         PositionComponent position = positionComponentMapper.get(entity);
         SpeedComponent speed = speedComponentMapper.get(entity);
         DestinationComponent destination = destinationComponentMapper.get(entity);
 
-        float realSpeed = speed.speed * world.getDelta() / 1000;
-        float deltaX = destination.x - position.x;
-        float deltaY = destination.y - position.y;
+        //System.out.println("avant, x = " + position.getRealPositionX() + ", y = " + position.getRealPositionY());
+        float realSpeed = speed.speed * world.getDelta() / 10f;
+        //System.out.println("speed = " + speed.speed + ", speed review = " + realSpeed);
+
+        float deltaX = destination.x - position.getRealPositionX();
+        float deltaY = destination.y - position.getRealPositionY();
         float distance = deltaX * deltaX + deltaY * deltaY;
         float ratio = (realSpeed * realSpeed) / distance;
-        boolean reach = false;
 
         if (ratio > 1) {
-            entity.removeComponent(destination);
+            entity.addComponent(new DestinationReachedComponent());
+            entity.changedInWorld();
             ratio = 1;
-            reach = true;
         }
 
         position.x += deltaX * ratio;
         position.y += deltaY * ratio;
-
-        if (reach)
-            for (MovingEntityListener listener : listeners)
-                listener.entityHasReachDestination(entity);
-
-    }
-
-    public void addMovingEntityListener(MovingEntityListener listener) {
-        listeners.add(listener);
+        //System.out.println("après, x = " + position.getRealPositionX() + ", y = " + position.getRealPositionY());
     }
 }

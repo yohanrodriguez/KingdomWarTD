@@ -10,6 +10,7 @@
     - Placement sur zone autorisée
     - Faire apparaitre ennemi                   DONE!
     - Déplacer ennemi                           DONE!
+    - Déplacer ennemi sur un rail               DONE! (vitesse à revoir)
     - Détecter ennemi (zone perception)
     - Tuer ennemi
     - Ennemi gagne

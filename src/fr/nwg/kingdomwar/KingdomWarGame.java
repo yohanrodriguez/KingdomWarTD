@@ -11,9 +11,7 @@ import fr.nwg.kingdomwar.input.MyInputProcessor;
 import fr.nwg.kingdomwar.system.foes.AddEnemySystem;
 import fr.nwg.kingdomwar.system.graphics.DrawingShapeSystem;
 import fr.nwg.kingdomwar.system.input.InputGarbageCollectorSystem;
-import fr.nwg.kingdomwar.system.misc.PrepareProcessSystem;
-import fr.nwg.kingdomwar.system.misc.RemoveEntityFromWorldSystem;
-import fr.nwg.kingdomwar.system.misc.TimeToLiveSystem;
+import fr.nwg.kingdomwar.system.misc.*;
 import fr.nwg.kingdomwar.system.tower.MovingBulletSystem;
 import fr.nwg.kingdomwar.system.tower.PlacingSystem;
 import fr.nwg.kingdomwar.system.tower.ShootingSystem;
@@ -31,6 +29,8 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(new MovingBulletSystem());
         world.setSystem(new ShootingSystem());
         world.setSystem(new TimeToLiveSystem());
+        world.setSystem(new DestinationReachedSystem());
+        world.setSystem(new MovingToDestinationSystem());
 
         world.setSystem(new PlacingSystem());
 
@@ -59,6 +59,7 @@ public class KingdomWarGame implements ApplicationListener {
     @Override
     public void render() {
         world.setDelta(Gdx.graphics.getDeltaTime() * 1000);
+        System.out.println("delta = " + world.getDelta());
         world.getSystem(PrepareProcessSystem.class).process();
         world.process();
         world.getSystem(InputGarbageCollectorSystem.class).process();

@@ -2,6 +2,7 @@ package enemies;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import fr.nwg.kingdomwar.component.DestinationReachedComponent;
 import fr.nwg.kingdomwar.component.misc.DestinationComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.component.physic.SpeedComponent;
@@ -11,9 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * Created by eptwalabha on 25/05/2014.
@@ -54,7 +53,7 @@ public class TestMovingEntitySystem {
     }
 
     @Test
-    public void testCanEntityMoves() {
+    public void testAnEntityMoves() {
 
         assertThat(position.x, is(0f));
         assertThat(position.y, is(0f));
@@ -86,28 +85,7 @@ public class TestMovingEntitySystem {
 
         assertThat(position.x, is(destination.x));
         assertThat(position.x, is(destination.y));
-        assertNull(entity.getComponent(DestinationComponent.class));
-    }
-
-    @Test
-    public void canSystemTriggerASignalWhenAnEntityReachItsDestination() {
-
-        MovingEntityListenerMock listener = new MovingEntityListenerMock();
-        movingSystem.addMovingEntityListener(listener);
-
-        assertThat(listener.counter, is(0));
-        assertNull(listener.entity);
-
-        position.x = 75;
-        position.y = 75;
-        speed.speed = 50;
-
-        world.setDelta(1000f);
-        world.process();
-
-        assertThat(listener.counter, is(1));
-        assertEquals(entity, listener.entity);
-
+        assertNotNull(entity.getComponent(DestinationReachedComponent.class));
     }
 
     private Entity generateEntity() {

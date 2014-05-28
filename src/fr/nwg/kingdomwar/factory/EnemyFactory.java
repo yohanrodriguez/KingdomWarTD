@@ -3,6 +3,8 @@ package fr.nwg.kingdomwar.factory;
 import com.artemis.Entity;
 import com.artemis.World;
 import fr.nwg.kingdomwar.Constants;
+import fr.nwg.kingdomwar.component.DestinationReachedComponent;
+import fr.nwg.kingdomwar.component.RailComponent;
 import fr.nwg.kingdomwar.component.foes.LifeComponent;
 import fr.nwg.kingdomwar.component.graphics.DrawingComponent;
 import fr.nwg.kingdomwar.component.graphics.DrawingTypeComponent;
@@ -25,11 +27,12 @@ public class EnemyFactory extends EntityFactory {
         basicEnemy.addComponent(position);
         basicEnemy.addComponent(new LifeComponent(100));
         basicEnemy.addComponent(new SpeedComponent(42));
-        basicEnemy.addComponent(new VelocityComponent(position, destination));
         basicEnemy.addComponent(new DrawingTypeComponent(DrawingTypeComponent.DrawingType.ELLIPSE));
         SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
         basicEnemy.addComponent(size);
         basicEnemy.addComponent(drawingComponent);
+        basicEnemy.addComponent(RailFactory.getSimpleRail());
+        basicEnemy.addComponent(new DestinationReachedComponent());
         basicEnemy.addToWorld();
         return basicEnemy;
     }
