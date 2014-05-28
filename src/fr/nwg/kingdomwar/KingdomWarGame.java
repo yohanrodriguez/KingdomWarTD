@@ -1,6 +1,7 @@
 package fr.nwg.kingdomwar;
 
 import com.artemis.Entity;
+import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
@@ -13,6 +14,7 @@ import fr.nwg.kingdomwar.system.graphics.DrawingShapeSystem;
 import fr.nwg.kingdomwar.system.input.InputGarbageCollectorSystem;
 import fr.nwg.kingdomwar.system.misc.*;
 import fr.nwg.kingdomwar.system.tower.MovingBulletSystem;
+import fr.nwg.kingdomwar.system.tower.PerceptionSystem;
 import fr.nwg.kingdomwar.system.tower.PlacingSystem;
 import fr.nwg.kingdomwar.system.tower.ShootingSystem;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
@@ -24,6 +26,8 @@ public class KingdomWarGame implements ApplicationListener {
     public void create() {
         world = new KingdomWarWorld();
         world.initialize();
+        world.setManager(new GroupManager());
+
         world.setSystem(new PrepareProcessSystem(world), false);
         world.setSystem(new DrawingShapeSystem(world));
         world.setSystem(new MovingBulletSystem());
@@ -31,6 +35,7 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(new TimeToLiveSystem());
         world.setSystem(new DestinationReachedSystem());
         world.setSystem(new MovingToDestinationSystem());
+        world.setSystem(new PerceptionSystem());
 
         world.setSystem(new PlacingSystem());
 
@@ -59,7 +64,7 @@ public class KingdomWarGame implements ApplicationListener {
     @Override
     public void render() {
         world.setDelta(Gdx.graphics.getDeltaTime() * 1000);
-        System.out.println("delta = " + world.getDelta());
+//        System.out.println("delta = " + world.getDelta());
         world.getSystem(PrepareProcessSystem.class).process();
         world.process();
         world.getSystem(InputGarbageCollectorSystem.class).process();

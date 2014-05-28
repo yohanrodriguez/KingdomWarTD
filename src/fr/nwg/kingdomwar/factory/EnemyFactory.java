@@ -2,6 +2,8 @@ package fr.nwg.kingdomwar.factory;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import com.artemis.managers.GroupManager;
+import com.artemis.utils.ImmutableBag;
 import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.component.DestinationReachedComponent;
 import fr.nwg.kingdomwar.component.RailComponent;
@@ -34,6 +36,9 @@ public class EnemyFactory extends EntityFactory {
         basicEnemy.addComponent(RailFactory.getSimpleRail());
         basicEnemy.addComponent(new DestinationReachedComponent());
         basicEnemy.addToWorld();
+
+        GroupManager manager = world.getManager(GroupManager.class);
+        manager.add(basicEnemy, "FOES");
         return basicEnemy;
     }
 

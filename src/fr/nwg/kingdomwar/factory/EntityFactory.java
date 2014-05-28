@@ -16,6 +16,7 @@ import fr.nwg.kingdomwar.component.grid.ColumnsComponent;
 import fr.nwg.kingdomwar.component.grid.GridPosititionComponent;
 import fr.nwg.kingdomwar.component.grid.RowsComponent;
 import fr.nwg.kingdomwar.component.tower.FiringRateComponent;
+import fr.nwg.kingdomwar.component.tower.PerceptionComponent;
 import fr.nwg.kingdomwar.listener.AreaClickListenerComponent;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
@@ -28,7 +29,8 @@ public class EntityFactory {
         tower.addComponent(size);
         tower.addComponent(new PositionComponent(position, -((size.width)/2), -((size.height)/2)));
         tower.addComponent(new DrawingComponent(255, 255, 255, 1));
-        tower.addComponent(new AimingComponent(aimingPosition));
+//        tower.addComponent(new AimingComponent(aimingPosition));
+        tower.addComponent(new PerceptionComponent(100));
         tower.addComponent(new FiringRateComponent(100));
         tower.addToWorld();
         return tower;

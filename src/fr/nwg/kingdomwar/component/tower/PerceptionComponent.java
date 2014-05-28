@@ -7,4 +7,7 @@ public class PerceptionComponent extends Component{
     public float radius;
 
 
+    public PerceptionComponent(float radis) {
+        this.radius = radis;
+    }
 }
