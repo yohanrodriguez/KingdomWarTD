@@ -2,6 +2,7 @@ package fr.nwg.kingdomwar;
 
 import com.artemis.Entity;
 import com.artemis.managers.GroupManager;
+import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
@@ -10,9 +11,12 @@ import fr.nwg.kingdomwar.factory.EnemyFactory;
 import fr.nwg.kingdomwar.factory.EntityFactory;
 import fr.nwg.kingdomwar.input.MyInputProcessor;
 import fr.nwg.kingdomwar.system.foes.AddEnemySystem;
+import fr.nwg.kingdomwar.system.foes.LifeRemovalSystem;
+import fr.nwg.kingdomwar.system.graphics.DisplayLifeSystem;
 import fr.nwg.kingdomwar.system.graphics.DrawingShapeSystem;
 import fr.nwg.kingdomwar.system.input.InputGarbageCollectorSystem;
 import fr.nwg.kingdomwar.system.misc.*;
+import fr.nwg.kingdomwar.system.test.DealRandomDamageEveryHalfSecondSystem;
 import fr.nwg.kingdomwar.system.tower.MovingBulletSystem;
 import fr.nwg.kingdomwar.system.tower.PerceptionSystem;
 import fr.nwg.kingdomwar.system.tower.PlacingSystem;
@@ -21,16 +25,20 @@ import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class KingdomWarGame implements ApplicationListener {
     private KingdomWarWorld world;
+    private ImmutableBag<Entity> foes;
 
     @Override
     public void create() {
         world = new KingdomWarWorld();
         world.initialize();
         world.setManager(new GroupManager());
-
+        foes = world.getManager(GroupManager.class).getEntities("FOES");
         world.setSystem(new PrepareProcessSystem(world), false);
         world.setSystem(new DrawingShapeSystem(world));
+        world.setSystem(new DisplayLifeSystem(world));
         world.setSystem(new MovingBulletSystem());
+        world.setSystem(new LifeRemovalSystem());
+        world.setSystem(new DealRandomDamageEveryHalfSecondSystem());
         world.setSystem(new ShootingSystem());
         world.setSystem(new TimeToLiveSystem());
         world.setSystem(new DestinationReachedSystem());
@@ -68,7 +76,7 @@ public class KingdomWarGame implements ApplicationListener {
         world.getSystem(PrepareProcessSystem.class).process();
         world.process();
         world.getSystem(InputGarbageCollectorSystem.class).process();
-        //System.out.println("nbr d'entités = " + world.getManager(EntityManager.class).getActiveEntityCount());
+//        System.out.println("nbr d'ennemis = " + foes.size());
     }
 
     @Override

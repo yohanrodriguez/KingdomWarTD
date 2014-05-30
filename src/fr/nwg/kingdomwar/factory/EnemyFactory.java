@@ -22,13 +22,12 @@ public class EnemyFactory extends EntityFactory {
 
     public static Entity createBasicEnemy(World world) {
         PositionComponent position = new PositionComponent();
-        PositionComponent destination = new PositionComponent(42, 42);
         DrawingComponent drawingComponent = new DrawingComponent(0, .7f, .7f, 1);
 
         Entity basicEnemy = world.createEntity();
         basicEnemy.addComponent(position);
-        basicEnemy.addComponent(new LifeComponent(100));
-        basicEnemy.addComponent(new SpeedComponent(42));
+        basicEnemy.addComponent(new LifeComponent(100, 150));
+        basicEnemy.addComponent(new SpeedComponent(200));
         basicEnemy.addComponent(new DrawingTypeComponent(DrawingTypeComponent.DrawingType.ELLIPSE));
         SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
         basicEnemy.addComponent(size);
