@@ -36,15 +36,12 @@ public class MovingToDestinationSystem extends EntityProcessingSystem {
         SpeedComponent speed = speedComponentMapper.get(entity);
         DestinationComponent destination = destinationComponentMapper.get(entity);
 
-        //System.out.println("avant, x = " + position.getRealPositionX() + ", y = " + position.getRealPositionY());
-        float realSpeed = speed.speed * world.getDelta() / 10f;
-        //System.out.println("speed = " + speed.speed + ", speed review = " + realSpeed);
-
+        float shifting = speed.speed * world.getDelta() / 1000f;
         float deltaX = destination.x - position.getRealPositionX();
         float deltaY = destination.y - position.getRealPositionY();
         float distance = deltaX * deltaX + deltaY * deltaY;
-        float ratio = (realSpeed * realSpeed) / distance;
-
+        float ratio = (float) Math.sqrt((shifting * shifting) / distance);
+        
         if (ratio > 1) {
             entity.addComponent(new DestinationReachedComponent());
             entity.changedInWorld();
@@ -53,6 +50,5 @@ public class MovingToDestinationSystem extends EntityProcessingSystem {
 
         position.x += deltaX * ratio;
         position.y += deltaY * ratio;
-        //System.out.println("après, x = " + position.getRealPositionX() + ", y = " + position.getRealPositionY());
     }
 }
