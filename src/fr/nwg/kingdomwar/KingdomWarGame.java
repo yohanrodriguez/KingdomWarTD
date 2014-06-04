@@ -14,6 +14,8 @@ import fr.nwg.kingdomwar.system.foes.AddEnemySystem;
 import fr.nwg.kingdomwar.system.foes.LifeRemovalSystem;
 import fr.nwg.kingdomwar.system.graphics.DisplayLifeSystem;
 import fr.nwg.kingdomwar.system.graphics.DrawingShapeSystem;
+import fr.nwg.kingdomwar.system.graphics.debug.DisplayPositionDebugSystem;
+import fr.nwg.kingdomwar.system.graphics.debug.DisplayRadiusDebugSystem;
 import fr.nwg.kingdomwar.system.input.InputGarbageCollectorSystem;
 import fr.nwg.kingdomwar.system.misc.*;
 import fr.nwg.kingdomwar.system.test.DealRandomDamageEveryHalfSecondSystem;
@@ -36,6 +38,7 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(new PrepareProcessSystem(world), false);
         world.setSystem(new DrawingShapeSystem(world));
         world.setSystem(new DisplayLifeSystem(world));
+//        addDebugSystems();
         world.setSystem(new MovingBulletSystem());
         world.setSystem(new LifeRemovalSystem());
         world.setSystem(new DealRandomDamageEveryHalfSecondSystem());
@@ -45,7 +48,9 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(new MovingToDestinationSystem());
         world.setSystem(new PerceptionSystem());
 
-        world.setSystem(new PlacingSystem());
+
+
+        world.setSystem(new PlacingSystem(world));
 
         world.setSystem(new AddEnemySystem());
 
@@ -61,12 +66,16 @@ public class KingdomWarGame implements ApplicationListener {
         inputProcessor.addTouchedUpListener(inputEntity);
         Gdx.input.setInputProcessor(inputProcessor);
 
-        //Cells
         EntityFactory.createEntityPlacementShape(world, cursorPosition);
-        Entity grid = EntityFactory.createGrid(world, Constants.GRID_ROWS, Constants.GRID_COLUMNS);
-        EntityFactory.createCellsFromGrid(world, grid);
 
         EnemyFactory.createBasicEnemy(world);
+
+        world.getGrid().createCellsEntity(world);
+    }
+
+    private void addDebugSystems() {
+        world.setSystem(new DisplayPositionDebugSystem(world));
+        world.setSystem(new DisplayRadiusDebugSystem(world));
     }
 
     @Override
@@ -76,7 +85,9 @@ public class KingdomWarGame implements ApplicationListener {
         world.getSystem(PrepareProcessSystem.class).process();
         world.process();
         world.getSystem(InputGarbageCollectorSystem.class).process();
-//        System.out.println("nbr d'ennemis = " + foes.size());
+
+        if (System.currentTimeMillis() % 100 == 0)
+            System.out.println("fps = " + Gdx.graphics.getFramesPerSecond());
     }
 
     @Override
