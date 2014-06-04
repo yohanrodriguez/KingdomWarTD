@@ -25,12 +25,12 @@ import static fr.nwg.kingdomwar.Constants.*;
 public class EntityFactory {
     public static Entity createTowerEntity(KingdomWarWorld world, Vector3 position, PositionComponent aimingPosition) {
         Entity tower = world.createEntity();
-        SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
+        SizeComponent size = world.getGrid().getCellSize();
         tower.addComponent(size);
-        tower.addComponent(new PositionComponent(position, -((size.width)/2), -((size.height)/2)));
+        tower.addComponent(new PositionComponent(position, 0, 0));
         tower.addComponent(new DrawingComponent(255, 255, 255, 1));
 //        tower.addComponent(new AimingComponent(aimingPosition));
-        tower.addComponent(new PerceptionComponent(100));
+        tower.addComponent(new PerceptionComponent(200));
         tower.addComponent(new FiringRateComponent(100));
         tower.addToWorld();
         return tower;
@@ -38,7 +38,7 @@ public class EntityFactory {
 
     public static Entity createBullet(KingdomWarWorld world, PositionComponent position, AimingComponent aiming) {
         Entity bullet = world.createEntity();
-        SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
+        SizeComponent size = world.getGrid().getCellSize();
         bullet.addComponent(new DrawingComponent(255, 0, 0, 1));
         bullet.addComponent(new SizeComponent(5, 5));
         PositionComponent positionComponent = new PositionComponent(position, size.width/2, size.height/2);
@@ -53,7 +53,7 @@ public class EntityFactory {
 
     public static Entity createEntityPlacementShape(KingdomWarWorld world, PositionComponent cursorPosition) {
         Entity placementShape = world.createEntity();
-        SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
+        SizeComponent size = world.getGrid().getCellSize();
         placementShape.addComponent(new DrawingComponent(1, 1, 1, 1));
         placementShape.addComponent(size);
 
@@ -71,47 +71,5 @@ public class EntityFactory {
         input.addComponent(cursorPosition);
         input.addToWorld();
         return input;
-    }
-
-    public static Entity createGrid(KingdomWarWorld world, int rows, int columns) {
-        Entity grid = world.createEntity();
-        grid.addComponent(new RowsComponent(rows));
-        grid.addComponent(new ColumnsComponent(columns));
-
-        grid.addComponent(new AreaClickListenerComponent(new PositionComponent(), new SizeComponent((int)WORLD_WIDTH / 2, (int)WORLD_HEIGHT / 2)));
-
-        grid.addToWorld();
-        return grid;
-    }
-
-    public static void createCellsFromGrid(KingdomWarWorld world, Entity grid) {
-        int rows = grid.getComponent(RowsComponent.class).rows;
-        int columns = grid.getComponent(ColumnsComponent.class).columns;
-        SizeComponent cellSize = getCellSizeFromWorldSize(rows, columns);
-
-        for (int i=0; i < rows; ++i){
-            for (int j=0; j < columns; ++j) {
-                Entity cell = world.createEntity();
-                cell.addComponent(new GridPosititionComponent(i, j));
-                cell.addComponent(getPositionFromGridPosition(i, j, cellSize));
-                DrawingComponent drawingComponent = new DrawingComponent(255, 255, 255, 1);
-                drawingComponent.shapeType = ShapeRenderer.ShapeType.Line;
-                cell.addComponent(drawingComponent);
-                cell.addComponent(cellSize);
-                cell.addToWorld();
-            }
-        }
-    }
-
-    private static SizeComponent getCellSizeFromWorldSize(int rows, int columns) {
-        int width = (int) (Constants.WORLD_WIDTH / rows);
-        int height = (int) (Constants.WORLD_HEIGHT / columns);
-        return new SizeComponent(width, height);
-    }
-
-    private static PositionComponent getPositionFromGridPosition(int gridX, int gridY, SizeComponent cellSize) {
-        int x = gridX * cellSize.width;
-        int y = gridY * cellSize.height;
-        return new PositionComponent(x, y);
     }
 }

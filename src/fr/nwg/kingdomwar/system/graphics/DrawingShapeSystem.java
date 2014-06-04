@@ -36,13 +36,11 @@ public class DrawingShapeSystem extends EntityProcessingSystem{
         PositionComponent position = positionComponentMapper.get(entity);
         DrawingTypeComponent drawingType = drawingTypeComponentMapper.getSafe(entity);
 
-        if (drawingComponent != null) {
-            shapeRenderer.setColor(drawingComponent.color);
-            if(drawingComponent.shapeType != null)
-                shapeRenderer.begin(drawingComponent.shapeType);
-            else
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        }
+        shapeRenderer.setColor(drawingComponent.color);
+        if(drawingComponent.shapeType != null)
+            shapeRenderer.begin(drawingComponent.shapeType);
+        else
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         if(drawingType == null || drawingType.drawingType == DrawingTypeComponent.DrawingType.RECT)
             shapeRenderer.rect(position.getRealPositionX(), position.getRealPositionY(), size.width, size.height);

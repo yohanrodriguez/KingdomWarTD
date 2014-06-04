@@ -5,31 +5,41 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
 import fr.nwg.kingdomwar.component.input.TouchedUpComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EntityFactory;
+import fr.nwg.kingdomwar.JMontemmerde.Grid;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class PlacingSystem extends EntityProcessingSystem {
 
+    private final Grid grid;
     @Mapper
     private ComponentMapper<TouchedUpComponent> touchedUpComponentMapper;
     //Temp following cursor
     @Mapper
     private ComponentMapper<CursorPositionComponent> cursorPositionComponentMapper;
 
-    public PlacingSystem() {
+    public PlacingSystem(KingdomWarWorld kingdomWarWorld) {
         super(Aspect.getAspectForAll(TouchedUpComponent.class, CursorPositionComponent.class));
+        grid = kingdomWarWorld.getGrid();
     }
 
     @Override
     protected void process(Entity entity) {
         PositionComponent touchedUpPosition = touchedUpComponentMapper.get(entity).position;
         PositionComponent cursorPosition = cursorPositionComponentMapper.get(entity).position;
-        Entity tower = EntityFactory.createTowerEntity((KingdomWarWorld) world, touchedUpPosition.getVector3(), cursorPosition);
+        int row = grid.getRowFromPosition(touchedUpPosition.getRealPositionY());
+        int column = grid.getColumnFromPosition(touchedUpPosition.getRealPositionX());
+
+        if (grid.getTopoAt(column, row) == 1) {
+            int x = column * grid.getCellSize().width;
+            int y = row * grid.getCellSize().height;
+            Vector3 victor = new Vector3(x, y, 0);
+            Entity tower = EntityFactory.createTowerEntity((KingdomWarWorld) world, victor, cursorPosition);
+        }
 //        tower.changedInWorld();
     }
 }

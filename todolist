@@ -4,15 +4,17 @@
 
     - Tirer vers la souris                      DONE!
     - Placement suivi souris                    DONE!
-    - Simulation drag and drop
     - Grille (map)                              DONE!
-    - Placement sur grille
-    - Placement sur zone autorisée
+    - Placement sur grille                      DONE!
     - Faire apparaitre ennemi                   DONE!
     - Déplacer ennemi                           DONE!
-    - Déplacer ennemi sur un rail               DONE! (vitesse à revoir)
-    - Détecter ennemi (zone perception)
-    - Tuer ennemi
-    - Ennemi gagne
+    - Déplacer ennemi sur un rail               DONE!
+    - Tuer ennemi                               DONE!
+    - collisions                                IN PROGRESS!
+    - Détecter ennemi (zone perception)         régler ennemi hors perception
+    - Placement sur zone autorisée              DONE!
     - Scoring
-    - Compatibilité Android                     DONE!
+    - gestion fin partie
+    - Simulation drag and drop
+    - changer la couleur de la tower sur une zone non autorisée parce que les couleurs c'est cool
+    - charger une map à partir d'un fichier de config en TXT parce que le TXT c'est cool
