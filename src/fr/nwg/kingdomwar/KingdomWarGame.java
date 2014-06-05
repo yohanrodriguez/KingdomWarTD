@@ -10,6 +10,9 @@ import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EnemyFactory;
 import fr.nwg.kingdomwar.factory.EntityFactory;
 import fr.nwg.kingdomwar.input.MyInputProcessor;
+import fr.nwg.kingdomwar.system.collision.CollisionPair;
+import fr.nwg.kingdomwar.system.collision.CollisionSystem;
+import fr.nwg.kingdomwar.system.collision.handlers.DealDamageCollisionHandler;
 import fr.nwg.kingdomwar.system.foes.AddEnemySystem;
 import fr.nwg.kingdomwar.system.foes.LifeRemovalSystem;
 import fr.nwg.kingdomwar.system.graphics.DisplayLifeSystem;
@@ -41,14 +44,13 @@ public class KingdomWarGame implements ApplicationListener {
 //        addDebugSystems();
         world.setSystem(new MovingBulletSystem());
         world.setSystem(new LifeRemovalSystem());
-        world.setSystem(new DealRandomDamageEveryHalfSecondSystem());
+        // world.setSystem(new DealRandomDamageEveryHalfSecondSystem());
         world.setSystem(new ShootingSystem());
         world.setSystem(new TimeToLiveSystem());
         world.setSystem(new DestinationReachedSystem());
         world.setSystem(new MovingToDestinationSystem());
         world.setSystem(new PerceptionSystem());
-
-
+        setCollisions();
 
         world.setSystem(new PlacingSystem(world));
 
@@ -73,6 +75,23 @@ public class KingdomWarGame implements ApplicationListener {
         world.getGrid().createCellsEntity(world);
     }
 
+    private void setCollisions() {
+
+        CollisionSystem collisionSystem = new CollisionSystem();
+
+        // collision entre les balles et les ennemis
+        CollisionPair pairBulletsFoes = new CollisionPair(world, Constants.Groups.BULLET, Constants.Groups.FOES);
+        pairBulletsFoes.addCollisionHandler(new DealDamageCollisionHandler());
+
+        // collision entre les ennemis et le rayon de perception des tours
+        // CollisionPair pairFoesDetection = new CollisionPair(world, Constants.Groups.DETECTION, Constants.Groups.FOES);
+        // pairFoesDetection.addCollisionHandler(new TowerAimCollisionHandler());
+
+        collisionSystem.addNewCollisionPair(pairBulletsFoes);
+        world.setSystem(collisionSystem);
+
+    }
+
     private void addDebugSystems() {
         world.setSystem(new DisplayPositionDebugSystem(world));
         world.setSystem(new DisplayRadiusDebugSystem(world));
@@ -86,8 +105,6 @@ public class KingdomWarGame implements ApplicationListener {
         world.process();
         world.getSystem(InputGarbageCollectorSystem.class).process();
 
-        if (System.currentTimeMillis() % 100 == 0)
-            System.out.println("fps = " + Gdx.graphics.getFramesPerSecond());
     }
 
     @Override

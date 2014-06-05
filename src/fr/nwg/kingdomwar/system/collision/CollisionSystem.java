@@ -6,7 +6,7 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
-import fr.nwg.kingdomwar.component.collision.BoundCollisionComponent;
+import fr.nwg.kingdomwar.component.collision.CircleCollisionComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 
 import java.util.ArrayList;
@@ -20,13 +20,13 @@ import java.util.List;
 public class CollisionSystem extends EntitySystem {
 
     @Mapper
-    ComponentMapper<BoundCollisionComponent> entityShapeComponentMapper;
+    ComponentMapper<CircleCollisionComponent> circleCollisionComponentMapper;
 
     private List<CollisionPair> listOfCollisionPairs;
     private long numberOfCollision = 0;
 
     public CollisionSystem() {
-        super(Aspect.getAspectForAll(PositionComponent.class, BoundCollisionComponent.class));
+        super(Aspect.getAspectForAll(PositionComponent.class, CircleCollisionComponent.class));
         listOfCollisionPairs = new ArrayList<CollisionPair>();
     }
 
@@ -47,8 +47,8 @@ public class CollisionSystem extends EntitySystem {
         return listOfCollisionPairs.add(collisionPair);
     }
 
-    public BoundCollisionComponent getEntityBoundCollisionFor(Entity entity) {
-        return entityShapeComponentMapper.getSafe(entity);
+    public CircleCollisionComponent getEntityCircleCollisionFor(Entity entity) {
+        return circleCollisionComponentMapper.getSafe(entity);
     }
 
     public long getNumberOfCollision() {

@@ -4,7 +4,7 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.managers.GroupManager;
 import com.artemis.utils.ImmutableBag;
-import fr.nwg.kingdomwar.component.collision.BoundCollisionComponent;
+import fr.nwg.kingdomwar.component.collision.CircleCollisionComponent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,10 +60,10 @@ public class CollisionPair {
         if (collisionSystem == null)
             return false;
 
-        BoundCollisionComponent boundCollisionComponentA = collisionSystem.getEntityBoundCollisionFor(entityA);
-        BoundCollisionComponent boundCollisionComponentB = collisionSystem.getEntityBoundCollisionFor(entityB);
+        CircleCollisionComponent circleCollisionComponentA = collisionSystem.getEntityCircleCollisionFor(entityA);
+        CircleCollisionComponent circleCollisionComponentB = collisionSystem.getEntityCircleCollisionFor(entityB);
 
-        return boundCollisionComponentA != null && boundCollisionComponentB != null && (boundCollisionComponentA.intersects(boundCollisionComponentB));
+        return circleCollisionComponentA != null && circleCollisionComponentB != null && circleCollisionComponentA.intersects(circleCollisionComponentB);
     }
 
     public void setCollisionSystem(CollisionSystem collisionSystem) {

@@ -7,6 +7,7 @@ import com.artemis.utils.ImmutableBag;
 import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.component.DestinationReachedComponent;
 import fr.nwg.kingdomwar.component.RailComponent;
+import fr.nwg.kingdomwar.component.collision.CircleCollisionComponent;
 import fr.nwg.kingdomwar.component.foes.LifeComponent;
 import fr.nwg.kingdomwar.component.graphics.DrawingComponent;
 import fr.nwg.kingdomwar.component.graphics.DrawingTypeComponent;
@@ -27,17 +28,19 @@ public class EnemyFactory extends EntityFactory {
         Entity basicEnemy = world.createEntity();
         basicEnemy.addComponent(position);
         basicEnemy.addComponent(new LifeComponent(100, 150));
-        basicEnemy.addComponent(new SpeedComponent(200));
+        basicEnemy.addComponent(new SpeedComponent((float) (50f + Math.random() * 10f)));
         basicEnemy.addComponent(new DrawingTypeComponent(DrawingTypeComponent.DrawingType.ELLIPSE));
         SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
         basicEnemy.addComponent(size);
+
+        basicEnemy.addComponent(new CircleCollisionComponent(position, size.width / 2));
         basicEnemy.addComponent(drawingComponent);
         basicEnemy.addComponent(RailFactory.getSimpleRail());
         basicEnemy.addComponent(new DestinationReachedComponent());
         basicEnemy.addToWorld();
 
         GroupManager manager = world.getManager(GroupManager.class);
-        manager.add(basicEnemy, "FOES");
+        manager.add(basicEnemy, Constants.Groups.FOES);
         return basicEnemy;
     }
 

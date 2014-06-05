@@ -1,4 +1,4 @@
-package fr.nwg.kingdomwar.JMontemmerde;
+package fr.nwg.kingdomwar.non_artemis;
 
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

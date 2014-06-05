@@ -4,7 +4,7 @@ import com.artemis.World;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.nwg.kingdomwar.Constants;
-import fr.nwg.kingdomwar.JMontemmerde.Grid;
+import fr.nwg.kingdomwar.non_artemis.Grid;
 
 public class KingdomWarWorld extends World {
 

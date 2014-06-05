@@ -10,7 +10,7 @@ import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
 import fr.nwg.kingdomwar.component.input.TouchedUpComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EntityFactory;
-import fr.nwg.kingdomwar.JMontemmerde.Grid;
+import fr.nwg.kingdomwar.non_artemis.Grid;
 import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class PlacingSystem extends EntityProcessingSystem {
@@ -38,8 +38,7 @@ public class PlacingSystem extends EntityProcessingSystem {
             int x = column * grid.getCellSize().width;
             int y = row * grid.getCellSize().height;
             Vector3 victor = new Vector3(x, y, 0);
-            Entity tower = EntityFactory.createTowerEntity((KingdomWarWorld) world, victor, cursorPosition);
+            EntityFactory.createTowerEntity((KingdomWarWorld) world, victor, cursorPosition);
         }
-//        tower.changedInWorld();
     }
 }
