@@ -38,7 +38,8 @@ public class PlacingSystem extends EntityProcessingSystem {
             int x = column * grid.getCellSize().width;
             int y = row * grid.getCellSize().height;
             Vector3 victor = new Vector3(x, y, 0);
-            EntityFactory.createTowerEntity((KingdomWarWorld) world, victor, cursorPosition);
+            Entity newTower = EntityFactory.createTowerEntity((KingdomWarWorld) world, victor, cursorPosition);
+            grid.addEntityAt(newTower, column, row);
         }
     }
 }

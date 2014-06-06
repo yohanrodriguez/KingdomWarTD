@@ -16,7 +16,7 @@ public class KingdomWarWorld extends World {
         camera = new OrthographicCamera(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
         camera.setToOrtho(false);
         shapeRenderer = new ShapeRenderer();
-        grid = new Grid(Constants.GRID_ROWS, Constants.GRID_COLUMNS);
+        grid = new Grid(Constants.GRID_ROWS * 5, Constants.GRID_COLUMNS * 5, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
     }
 
     @Override

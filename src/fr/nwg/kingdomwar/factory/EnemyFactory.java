@@ -27,7 +27,7 @@ public class EnemyFactory extends EntityFactory {
 
         Entity basicEnemy = world.createEntity();
         basicEnemy.addComponent(position);
-        basicEnemy.addComponent(new LifeComponent(100, 150));
+        basicEnemy.addComponent(new LifeComponent(150, 150));
         basicEnemy.addComponent(new SpeedComponent((float) (50f + Math.random() * 10f)));
         basicEnemy.addComponent(new DrawingTypeComponent(DrawingTypeComponent.DrawingType.ELLIPSE));
         SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);

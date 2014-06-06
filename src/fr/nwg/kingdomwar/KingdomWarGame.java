@@ -5,6 +5,7 @@ import com.artemis.managers.GroupManager;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import fr.nwg.kingdomwar.system.graphics.DrawingGridSystem;
 import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EnemyFactory;
@@ -21,7 +22,6 @@ import fr.nwg.kingdomwar.system.graphics.debug.DisplayPositionDebugSystem;
 import fr.nwg.kingdomwar.system.graphics.debug.DisplayRadiusDebugSystem;
 import fr.nwg.kingdomwar.system.input.InputGarbageCollectorSystem;
 import fr.nwg.kingdomwar.system.misc.*;
-import fr.nwg.kingdomwar.system.test.DealRandomDamageEveryHalfSecondSystem;
 import fr.nwg.kingdomwar.system.tower.MovingBulletSystem;
 import fr.nwg.kingdomwar.system.tower.PerceptionSystem;
 import fr.nwg.kingdomwar.system.tower.PlacingSystem;
@@ -41,9 +41,11 @@ public class KingdomWarGame implements ApplicationListener {
 
         setCollisions();
         world.setSystem(new PrepareProcessSystem(world), false);
+
+        world.setSystem(new DrawingGridSystem(world));
         world.setSystem(new DrawingShapeSystem(world));
         world.setSystem(new DisplayLifeSystem(world));
-//        addDebugSystems();
+        addDebugSystems();
         world.setSystem(new MovingBulletSystem());
         world.setSystem(new LifeRemovalSystem());
         // world.setSystem(new DealRandomDamageEveryHalfSecondSystem());
@@ -72,7 +74,6 @@ public class KingdomWarGame implements ApplicationListener {
 
         EnemyFactory.createBasicEnemy(world);
 
-        world.getGrid().createCellsEntity(world);
     }
 
     private void setCollisions() {

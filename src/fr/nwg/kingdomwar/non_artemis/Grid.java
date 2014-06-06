@@ -1,54 +1,39 @@
 package fr.nwg.kingdomwar.non_artemis;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.nwg.kingdomwar.Constants;
-import fr.nwg.kingdomwar.component.graphics.DrawingComponent;
 import fr.nwg.kingdomwar.component.graphics.SizeComponent;
-import fr.nwg.kingdomwar.component.grid.GridPosititionComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
-import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Grid {
-    private final SizeComponent cellSize;
-    private int rows;
-    private int columns;
+
+    private float width;
+    private float height;
+    private int rowCount;
+    private int columnsCount;
+
     private List<Cell> cells;
     private int[][] topo;
 
-    public Grid(int gridRows, int gridColumns) {
-        this.rows = gridRows;
-        this.columns = gridColumns;
+    public Grid(int gridRows, int gridColumns, float gridWidth, float gridHeight) {
+        this.rowCount = gridRows;
+        this.columnsCount = gridColumns;
+        width = gridWidth;
+        height = gridHeight;
         cells = new ArrayList<Cell>();
-        this.cellSize = this.getCellSizeFromWorldSize();
-        topo = new int[Constants.GRID_COLUMNS][Constants.GRID_ROWS];
+        topo = new int[gridColumns][gridRows];
 
-        for(int i = 0; i < Constants.GRID_COLUMNS; ++i)
-            for(int j = 0; j < Constants.GRID_ROWS; ++j)
-                topo[i][j] = (i == 4) ? 0 : 1;
-    }
-
-    public void createCellsEntity(KingdomWarWorld world) {
-        for (int i=0; i < rows; ++i){
-            for (int j=0; j < columns; ++j) {
-                Entity cell = world.createEntity();
-                cell.addComponent(new GridPosititionComponent(i, j));
-                cell.addComponent(getPositionFromGridPosition(i, j, cellSize));
-                DrawingComponent drawingComponent = new DrawingComponent(255, 255, 255, 1);
-                drawingComponent.shapeType = ShapeRenderer.ShapeType.Line;
-                cell.addComponent(drawingComponent);
-                cell.addComponent(cellSize);
-                cell.addToWorld();
-            }
-        }
+        for(int i = 0; i < gridColumns; ++i)
+            for(int j = 0; j < gridRows; ++j)
+                topo[i][j] = (Math.random() < 0.2) ? 0 : 1;
     }
 
     private SizeComponent getCellSizeFromWorldSize() {
-        int width = (int) (Constants.WORLD_WIDTH / columns);
-        int height = (int) (Constants.WORLD_HEIGHT / rows);
+        int width = (int) (Constants.WORLD_WIDTH / columnsCount);
+        int height = (int) (Constants.WORLD_HEIGHT / rowCount);
         System.out.println("width:" + width + ", height:" + height);
         return new SizeComponent(width, height);
     }
@@ -74,18 +59,34 @@ public class Grid {
     }
 
     public int getRowFromPosition(float positionY) {
-        return (int) Math.floor(positionY / cellSize.height);
+        return (int) Math.floor(positionY / (height / rowCount));
     }
 
     public int getColumnFromPosition(float positionX) {
-        return (int) Math.floor(positionX / cellSize.width);
+        return (int) Math.floor(positionX / (width / columnsCount));
     }
 
     public SizeComponent getCellSize() {
-        return cellSize;
+        return new SizeComponent((int) (width / columnsCount), (int) (height / rowCount));
     }
 
     public int getTopoAt(int column, int row) {
         return topo[column][row];
+    }
+
+    public int getColumnsCount() {
+        return columnsCount;
+    }
+
+    public int getRowsCount() {
+        return rowCount;
+    }
+
+    public float getGridWidth() {
+        return width;
+    }
+
+    public float getGridHeigth() {
+        return height;
     }
 }
