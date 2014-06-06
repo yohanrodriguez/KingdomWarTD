@@ -7,20 +7,20 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.nwg.kingdomwar.component.collision.CircleCollisionComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
-import fr.nwg.kingdomwar.component.tower.PerceptionComponent;
 import fr.nwg.kingdomwar.world.KingdomWarData;
 
-public class DisplayRadiusDebugSystem extends EntityProcessingSystem{
+public class DisplayCollisionDebugSystem extends EntityProcessingSystem{
 
     private ShapeRenderer shapeRenderer;
     @Mapper
-    ComponentMapper<PerceptionComponent> perceptionComponentMapper;
+    ComponentMapper<CircleCollisionComponent> circleCollisionComponentMapper;
     @Mapper
     ComponentMapper<PositionComponent> positionComponentMapper;
 
-    public DisplayRadiusDebugSystem() {
-        super(Aspect.getAspectForAll(PositionComponent.class, PerceptionComponent.class));
+    public DisplayCollisionDebugSystem() {
+        super(Aspect.getAspectForAll(PositionComponent.class, CircleCollisionComponent.class));
         shapeRenderer = KingdomWarData.getInstance().getShapeRenderer();
     }
 
@@ -37,8 +37,8 @@ public class DisplayRadiusDebugSystem extends EntityProcessingSystem{
         float x = position.getRealPositionX();
         float y = position.getRealPositionY();
 
-        shapeRenderer.setColor(Color.PINK);
-        shapeRenderer.circle(x, y, perceptionComponentMapper.get(entity).radius);
+        shapeRenderer.setColor(Color.BLUE);
+        shapeRenderer.circle(x, y, circleCollisionComponentMapper.get(entity).radius);
 
     }
 

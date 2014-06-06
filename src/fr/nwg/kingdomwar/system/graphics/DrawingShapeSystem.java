@@ -10,7 +10,7 @@ import fr.nwg.kingdomwar.component.graphics.DrawingComponent;
 import fr.nwg.kingdomwar.component.graphics.DrawingTypeComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.component.graphics.SizeComponent;
-import fr.nwg.kingdomwar.world.KingdomWarWorld;
+import fr.nwg.kingdomwar.world.KingdomWarData;
 
 public class DrawingShapeSystem extends EntityProcessingSystem{
 
@@ -24,9 +24,9 @@ public class DrawingShapeSystem extends EntityProcessingSystem{
     @Mapper
     ComponentMapper<DrawingTypeComponent> drawingTypeComponentMapper;
 
-    public DrawingShapeSystem(KingdomWarWorld kingdomWarWorld) {
+    public DrawingShapeSystem() {
         super(Aspect.getAspectForAll(DrawingComponent.class, SizeComponent.class, PositionComponent.class));
-        shapeRenderer = kingdomWarWorld.getShapeRenderer();
+        shapeRenderer = KingdomWarData.getInstance().getShapeRenderer();
     }
 
     @Override

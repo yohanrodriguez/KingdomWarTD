@@ -11,4 +11,9 @@ public class Constants {
         public static final String FOES = "Foe";
         public static final String DETECTION = "Detection";
     }
+
+    public class Rails {
+        public static final String GROUND_001 = "GROUND_001";
+
+    }
 }

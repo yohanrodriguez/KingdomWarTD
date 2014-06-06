@@ -3,7 +3,6 @@ package fr.nwg.kingdomwar.factory;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.managers.GroupManager;
-import com.artemis.utils.ImmutableBag;
 import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.component.DestinationReachedComponent;
 import fr.nwg.kingdomwar.component.RailComponent;
@@ -14,7 +13,7 @@ import fr.nwg.kingdomwar.component.graphics.DrawingTypeComponent;
 import fr.nwg.kingdomwar.component.graphics.SizeComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.component.physic.SpeedComponent;
-import fr.nwg.kingdomwar.component.physic.VelocityComponent;
+import fr.nwg.kingdomwar.world.KingdomWarData;
 
 import static fr.nwg.kingdomwar.Constants.GRID_COLUMNS;
 import static fr.nwg.kingdomwar.Constants.GRID_ROWS;
@@ -35,7 +34,7 @@ public class EnemyFactory extends EntityFactory {
 
         basicEnemy.addComponent(new CircleCollisionComponent(position, size.width / 2));
         basicEnemy.addComponent(drawingComponent);
-        basicEnemy.addComponent(RailFactory.getSimpleRail());
+        basicEnemy.addComponent(new RailComponent(KingdomWarData.getInstance().getRail(Constants.Rails.GROUND_001)));
         basicEnemy.addComponent(new DestinationReachedComponent());
         basicEnemy.addToWorld();
 

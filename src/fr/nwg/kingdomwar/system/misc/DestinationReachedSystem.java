@@ -25,6 +25,7 @@ public class DestinationReachedSystem extends EntityProcessingSystem {
         DestinationComponent nextDestination = rail.getNextDestination();
         if (nextDestination != null) {
             entity.addComponent(nextDestination);
+            rail.moveIndexForward();
         }
         entity.removeComponent(DestinationReachedComponent.class);
         entity.changedInWorld();

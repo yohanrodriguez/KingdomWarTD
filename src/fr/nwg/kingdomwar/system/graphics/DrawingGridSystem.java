@@ -1,12 +1,10 @@
 package fr.nwg.kingdomwar.system.graphics;
 
-import com.artemis.EntitySystem;
 import com.artemis.systems.VoidEntitySystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import fr.nwg.kingdomwar.KingdomWarGame;
+import fr.nwg.kingdomwar.world.KingdomWarData;
 import fr.nwg.kingdomwar.non_artemis.Grid;
-import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 /**
  * User: Eptwalabha
@@ -18,9 +16,9 @@ public class DrawingGridSystem extends VoidEntitySystem {
     private final ShapeRenderer shapeRenderer;
     private final Grid grid;
 
-    public DrawingGridSystem(KingdomWarWorld world) {
-        shapeRenderer = world.getShapeRenderer();
-        grid = world.getGrid();
+    public DrawingGridSystem() {
+        shapeRenderer = KingdomWarData.getInstance().getShapeRenderer();
+        grid = KingdomWarData.getInstance().getGrid();
     }
 
 

@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.nwg.kingdomwar.component.foes.LifeComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
-import fr.nwg.kingdomwar.world.KingdomWarWorld;
+import fr.nwg.kingdomwar.world.KingdomWarData;
 
 /**
  * Created by eptwalabha on 30/05/2014.
@@ -22,9 +22,9 @@ public class DisplayLifeSystem extends EntityProcessingSystem {
     @Mapper
     public ComponentMapper<PositionComponent> positionComponentMapper;
 
-    public DisplayLifeSystem(KingdomWarWorld kingdomWarWorld) {
+    public DisplayLifeSystem() {
         super(Aspect.getAspectForAll(LifeComponent.class, PositionComponent.class));
-        this.shapeRenderer = kingdomWarWorld.getShapeRenderer();
+        this.shapeRenderer = KingdomWarData.getInstance().getShapeRenderer();
     }
 
     @Override

@@ -9,7 +9,6 @@ import fr.nwg.kingdomwar.component.tower.AimingComponent;
 import fr.nwg.kingdomwar.component.tower.FiringRateComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EntityFactory;
-import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class ShootingSystem extends DelayedEntityProcessingSystem{
 
@@ -39,7 +38,7 @@ public class ShootingSystem extends DelayedEntityProcessingSystem{
     protected void processExpired(Entity entity) {
         PositionComponent position = positionComponentMapper.getSafe(entity);
         AimingComponent aiming = aimingComponentMapper.get(entity);
-        EntityFactory.createBullet((KingdomWarWorld) world, position, aiming);
+        EntityFactory.createBullet(world, position, aiming);
         FiringRateComponent firingRateComponent = firingRateComponentMapper.get(entity);
         firingRateComponent.resetDelay();
         this.offerDelay(firingRateComponent.delay);

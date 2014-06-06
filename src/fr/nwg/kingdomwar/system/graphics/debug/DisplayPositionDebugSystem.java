@@ -8,7 +8,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
-import fr.nwg.kingdomwar.world.KingdomWarWorld;
+import fr.nwg.kingdomwar.world.KingdomWarData;
 
 public class DisplayPositionDebugSystem extends EntityProcessingSystem {
 
@@ -17,9 +17,9 @@ public class DisplayPositionDebugSystem extends EntityProcessingSystem {
     @Mapper
     ComponentMapper<PositionComponent> positionComponentMapper;
 
-    public DisplayPositionDebugSystem(KingdomWarWorld world) {
+    public DisplayPositionDebugSystem() {
         super(Aspect.getAspectForAll(PositionComponent.class));
-        shapeRenderer = world.getShapeRenderer();
+        shapeRenderer = KingdomWarData.getInstance().getShapeRenderer();
     }
 
     @Override

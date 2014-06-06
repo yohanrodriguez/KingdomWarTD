@@ -21,6 +21,6 @@ public class CircleCollisionComponent extends Component {
     public boolean intersects(CircleCollisionComponent circleCollisionComponent) {
         float deltaX = circleCollisionComponent.position.getRealPositionX() - position.getRealPositionX();
         float deltaY = circleCollisionComponent.position.getRealPositionY() - position.getRealPositionY();
-        return (deltaX * deltaX + deltaY * deltaY) <= (radius * radius + circleCollisionComponent.radius + circleCollisionComponent.radius);
+        return (deltaX * deltaX + deltaY * deltaY) <= (radius * radius + circleCollisionComponent.radius * circleCollisionComponent.radius);
     }
 }

@@ -2,21 +2,26 @@ package fr.nwg.kingdomwar.component;
 
 import com.artemis.Component;
 import fr.nwg.kingdomwar.component.misc.DestinationComponent;
-
-import javax.print.attribute.standard.Destination;
-import java.util.ArrayList;
-import java.util.List;
+import fr.nwg.kingdomwar.non_artemis.Rail;
 
 public class RailComponent extends Component {
 
-    private List<DestinationComponent> destinations = new ArrayList<DestinationComponent>();
+    private Rail rail;
     private int index = 0;
 
-    public void addDestination(DestinationComponent destination) {
-        destinations.add(destination);
+    public RailComponent(Rail rail) {
+        this.rail = rail;
+        index = 0;
     }
 
     public DestinationComponent getNextDestination() {
-        return (index < destinations.size()) ? destinations.get(index++) : null;
+        DestinationComponent destinationComponent = rail.getDestination(index);
+        if (destinationComponent == null)
+            return null;
+        return destinationComponent;
+    }
+
+    public void moveIndexForward() {
+        index++;
     }
 }

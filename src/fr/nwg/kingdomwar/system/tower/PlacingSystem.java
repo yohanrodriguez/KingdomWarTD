@@ -10,8 +10,8 @@ import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
 import fr.nwg.kingdomwar.component.input.TouchedUpComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EntityFactory;
+import fr.nwg.kingdomwar.world.KingdomWarData;
 import fr.nwg.kingdomwar.non_artemis.Grid;
-import fr.nwg.kingdomwar.world.KingdomWarWorld;
 
 public class PlacingSystem extends EntityProcessingSystem {
 
@@ -22,9 +22,9 @@ public class PlacingSystem extends EntityProcessingSystem {
     @Mapper
     private ComponentMapper<CursorPositionComponent> cursorPositionComponentMapper;
 
-    public PlacingSystem(KingdomWarWorld kingdomWarWorld) {
+    public PlacingSystem() {
         super(Aspect.getAspectForAll(TouchedUpComponent.class, CursorPositionComponent.class));
-        grid = kingdomWarWorld.getGrid();
+        grid = KingdomWarData.getInstance().getGrid();
     }
 
     @Override
@@ -34,11 +34,11 @@ public class PlacingSystem extends EntityProcessingSystem {
         int row = grid.getRowFromPosition(touchedUpPosition.getRealPositionY());
         int column = grid.getColumnFromPosition(touchedUpPosition.getRealPositionX());
 
-        if (grid.getTopoAt(column, row) == 1) {
+        if (row >= 0 && column >= 0 && row < grid.getRowsCount() && column < grid.getColumnsCount() && grid.getTopoAt(column, row) == 1) {
             int x = column * grid.getCellSize().width;
             int y = row * grid.getCellSize().height;
             Vector3 victor = new Vector3(x, y, 0);
-            Entity newTower = EntityFactory.createTowerEntity((KingdomWarWorld) world, victor, cursorPosition);
+            Entity newTower = EntityFactory.createTowerEntity(world, victor, cursorPosition);
             grid.addEntityAt(newTower, column, row);
         }
     }

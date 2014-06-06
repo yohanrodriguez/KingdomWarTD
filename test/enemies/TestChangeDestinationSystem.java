@@ -2,35 +2,34 @@ package enemies;
 
 import com.artemis.Entity;
 import com.artemis.World;
-import com.sun.xml.internal.fastinfoset.algorithm.BuiltInEncodingAlgorithm;
 import fr.nwg.kingdomwar.component.DestinationReachedComponent;
 import fr.nwg.kingdomwar.component.RailComponent;
 import fr.nwg.kingdomwar.component.misc.DestinationComponent;
+import fr.nwg.kingdomwar.factory.RailFactory;
+import fr.nwg.kingdomwar.non_artemis.Rail;
 import fr.nwg.kingdomwar.system.misc.DestinationReachedSystem;
 import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 public class TestChangeDestinationSystem {
 
     private World world;
     private DestinationReachedSystem destinationReachedSystem;
     private Entity entity;
-    private RailComponent rail;
+    private Rail rail;
+    private RailComponent railComponent;
 
     @Before
     public void setUp() {
         world = new World();
         world.initialize();
         entity = world.createEntity();
-        rail = new RailComponent();
+        rail = RailFactory.getSimpleRail();
+        railComponent = new RailComponent(rail);
         entity.addComponent(new DestinationReachedComponent());
-        entity.addComponent(rail);
+        entity.addComponent(railComponent);
         entity.addToWorld();
 
         destinationReachedSystem = new DestinationReachedSystem();
@@ -51,14 +50,14 @@ public class TestChangeDestinationSystem {
 
         DestinationComponent destination2 = addDestinationToRail(rail);
 
-        entity.addComponent(rail.getNextDestination());
+        entity.addComponent(railComponent.getNextDestination());
         entity.changedInWorld();
 
         world.process();
         assertEquals(destination2, entity.getComponent(DestinationComponent.class));
     }
 
-    private DestinationComponent addDestinationToRail(RailComponent rail) {
+    private DestinationComponent addDestinationToRail(Rail rail) {
         DestinationComponent destinationComponent = new DestinationComponent(0, 0);
         rail.addDestination(destinationComponent);
         return destinationComponent;

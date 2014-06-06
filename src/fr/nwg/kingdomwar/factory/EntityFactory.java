@@ -1,8 +1,8 @@
 package fr.nwg.kingdomwar.factory;
 
 import com.artemis.Entity;
+import com.artemis.World;
 import com.artemis.managers.GroupManager;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.component.collision.CircleCollisionComponent;
@@ -14,20 +14,14 @@ import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.component.physic.SpeedComponent;
 import fr.nwg.kingdomwar.component.physic.VelocityComponent;
 import fr.nwg.kingdomwar.component.tower.AimingComponent;
-import fr.nwg.kingdomwar.component.grid.ColumnsComponent;
-import fr.nwg.kingdomwar.component.grid.GridPosititionComponent;
-import fr.nwg.kingdomwar.component.grid.RowsComponent;
 import fr.nwg.kingdomwar.component.tower.FiringRateComponent;
 import fr.nwg.kingdomwar.component.tower.PerceptionComponent;
-import fr.nwg.kingdomwar.listener.AreaClickListenerComponent;
-import fr.nwg.kingdomwar.world.KingdomWarWorld;
-
-import static fr.nwg.kingdomwar.Constants.*;
+import fr.nwg.kingdomwar.world.KingdomWarData;
 
 public class EntityFactory {
-    public static Entity createTowerEntity(KingdomWarWorld world, Vector3 position, PositionComponent aimingPosition) {
+    public static Entity createTowerEntity(World world, Vector3 position, PositionComponent aimingPosition) {
         Entity tower = world.createEntity();
-        SizeComponent size = world.getGrid().getCellSize();
+        SizeComponent size = KingdomWarData.getInstance().getGrid().getCellSize();
         tower.addComponent(size);
         tower.addComponent(new PositionComponent(position, 0, 0));
         tower.addComponent(new DrawingComponent(255, 255, 255, 1));
@@ -38,16 +32,16 @@ public class EntityFactory {
         return tower;
     }
 
-    public static Entity createBullet(KingdomWarWorld world, PositionComponent position, AimingComponent aiming) {
+    public static Entity createBullet(World world, PositionComponent position, AimingComponent aiming) {
         Entity bullet = world.createEntity();
-        SizeComponent size = world.getGrid().getCellSize();
+        SizeComponent size = KingdomWarData.getInstance().getGrid().getCellSize();
         bullet.addComponent(new DrawingComponent(255, 0, 0, 1));
         bullet.addComponent(new SizeComponent(5, 5));
 
         PositionComponent positionComponent = new PositionComponent(position, size.width/2, size.height/2);
 
         positionComponent.origin = position;
-        bullet.addComponent(new CircleCollisionComponent(positionComponent, 2.5f));
+        bullet.addComponent(new CircleCollisionComponent(positionComponent, 5f));
         bullet.addComponent(positionComponent);
         bullet.addComponent(new SpeedComponent(500));
         bullet.addComponent(new TimeToLiveComponent(10000));
@@ -59,9 +53,9 @@ public class EntityFactory {
         return bullet;
     }
 
-    public static Entity createEntityPlacementShape(KingdomWarWorld world, PositionComponent cursorPosition) {
+    public static Entity createEntityPlacementShape(World world, PositionComponent cursorPosition) {
         Entity placementShape = world.createEntity();
-        SizeComponent size = world.getGrid().getCellSize();
+        SizeComponent size = KingdomWarData.getInstance().getGrid().getCellSize();
         placementShape.addComponent(new DrawingComponent(1, 1, 1, 1));
         placementShape.addComponent(size);
 
@@ -73,7 +67,7 @@ public class EntityFactory {
         return placementShape;
     }
 
-    public static Entity createInputEntity(KingdomWarWorld world) {
+    public static Entity createInputEntity(World world) {
         Entity input = world.createEntity();
         CursorPositionComponent cursorPosition = new CursorPositionComponent();
         input.addComponent(cursorPosition);
