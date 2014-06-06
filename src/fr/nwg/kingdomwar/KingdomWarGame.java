@@ -38,6 +38,8 @@ public class KingdomWarGame implements ApplicationListener {
         world.initialize();
         world.setManager(new GroupManager());
         foes = world.getManager(GroupManager.class).getEntities("FOES");
+
+        setCollisions();
         world.setSystem(new PrepareProcessSystem(world), false);
         world.setSystem(new DrawingShapeSystem(world));
         world.setSystem(new DisplayLifeSystem(world));
@@ -50,15 +52,13 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(new DestinationReachedSystem());
         world.setSystem(new MovingToDestinationSystem());
         world.setSystem(new PerceptionSystem());
-        setCollisions();
 
         world.setSystem(new PlacingSystem(world));
 
         world.setSystem(new AddEnemySystem());
 
-        world.setSystem(new RemoveEntityFromWorldSystem());
         world.setSystem(new InputGarbageCollectorSystem(), false);
-
+        world.setSystem(new RemoveEntityFromWorldSystem());
 
         Entity inputEntity = EntityFactory.createInputEntity(world);
         PositionComponent cursorPosition = inputEntity.getComponent(CursorPositionComponent.class).position;
