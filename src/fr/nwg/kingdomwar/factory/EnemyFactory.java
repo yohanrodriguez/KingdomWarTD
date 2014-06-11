@@ -15,9 +15,6 @@ import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.component.physic.SpeedComponent;
 import fr.nwg.kingdomwar.world.KingdomWarData;
 
-import static fr.nwg.kingdomwar.Constants.GRID_COLUMNS;
-import static fr.nwg.kingdomwar.Constants.GRID_ROWS;
-
 public class EnemyFactory extends EntityFactory {
 
     public static Entity createBasicEnemy(World world) {
@@ -29,25 +26,17 @@ public class EnemyFactory extends EntityFactory {
         basicEnemy.addComponent(new LifeComponent(150, 150));
         basicEnemy.addComponent(new SpeedComponent((float) (50f + Math.random() * 10f)));
         basicEnemy.addComponent(new DrawingTypeComponent(DrawingTypeComponent.DrawingType.ELLIPSE));
-        SizeComponent size = getCellSizeFromWorldSize(GRID_ROWS, GRID_COLUMNS);
+        SizeComponent size = new SizeComponent(21,21);
         basicEnemy.addComponent(size);
 
-        basicEnemy.addComponent(new CircleCollisionComponent(position, size.width / 2));
+        basicEnemy.addComponent(new CircleCollisionComponent(position, size.width));
         basicEnemy.addComponent(drawingComponent);
         basicEnemy.addComponent(new RailComponent(KingdomWarData.getInstance().getRail(Constants.Rails.GROUND_001)));
         basicEnemy.addComponent(new DestinationReachedComponent());
-        basicEnemy.addToWorld();
 
         GroupManager manager = world.getManager(GroupManager.class);
         manager.add(basicEnemy, Constants.Groups.FOES);
+        basicEnemy.addToWorld();
         return basicEnemy;
     }
-
-    //TODO copy/paste refacto
-    private static SizeComponent getCellSizeFromWorldSize(int rows, int columns) {
-        int width = (int) (Constants.WORLD_WIDTH / rows);
-        int height = (int) (Constants.WORLD_HEIGHT / columns);
-        return new SizeComponent(width, height);
-    }
-
 }

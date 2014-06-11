@@ -3,12 +3,12 @@ package fr.nwg.kingdomwar.system.foes;
 import com.artemis.systems.VoidEntitySystem;
 import fr.nwg.kingdomwar.factory.EnemyFactory;
 
-public class AddEnemySystem extends VoidEntitySystem {
+public class SpawnFoeSystem extends VoidEntitySystem {
 
     private float delay;
-    private float initialDelay = 1000;
+    private float initialDelay = 5000;
 
-    public AddEnemySystem() {
+    public SpawnFoeSystem() {
         super();
         this.delay = initialDelay;
     }

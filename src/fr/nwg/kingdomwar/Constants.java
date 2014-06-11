@@ -9,7 +9,7 @@ public class Constants {
     public class Groups {
         public static final String BULLET = "Bullet";
         public static final String FOES = "Foe";
-        public static final String DETECTION = "Detection";
+        public static final String TOWERS = "Tower";
     }
 
     public class Rails {

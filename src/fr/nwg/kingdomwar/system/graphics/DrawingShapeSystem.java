@@ -45,7 +45,7 @@ public class DrawingShapeSystem extends EntityProcessingSystem{
         if(drawingType == null || drawingType.drawingType == DrawingTypeComponent.DrawingType.RECT)
             shapeRenderer.rect(position.getRealPositionX(), position.getRealPositionY(), size.width, size.height);
         else if(drawingType.drawingType == DrawingTypeComponent.DrawingType.ELLIPSE)
-            shapeRenderer.ellipse(position.getRealPositionX(), position.getRealPositionY(), size.width, size.height);
+            shapeRenderer.circle(position.getRealPositionX(), position.getRealPositionY(), size.width, size.height);
         shapeRenderer.end();
     }
 }

@@ -37,15 +37,20 @@ public class DisplayLifeSystem extends EntityProcessingSystem {
         if (lifePercentage > 1)
             lifePercentage = 1;
 
-        float size = 80f;
+        float width = 60f;
+        float height = 10f;
+        float offsetY = 30;
+        float posX = position.getRealPositionX() - width / 2;
+        float posY = position.getRealPositionY();
+
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.LIGHT_GRAY);
-        shapeRenderer.rect(position.getRealPositionX(), position.getRealPositionY() + 70, size + 4, 14);
+        shapeRenderer.rect(posX - 2, posY + offsetY, width + 4, height);
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(position.getRealPositionX() + 2, position.getRealPositionY() + 72, size, 10);
+        shapeRenderer.rect(posX, posY + offsetY + 2, width, height - 4);
         if (lifePercentage > 0) {
             shapeRenderer.setColor(Color.GREEN);
-            shapeRenderer.rect(position.getRealPositionX() + 2, position.getRealPositionY() + 72, size * lifePercentage, 10);
+            shapeRenderer.rect(posX, posY + offsetY + 2, width * lifePercentage, height - 4);
         }
         shapeRenderer.end();
     }
