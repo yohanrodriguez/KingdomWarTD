@@ -6,7 +6,7 @@ import fr.nwg.kingdomwar.factory.EnemyFactory;
 public class AddEnemySystem extends VoidEntitySystem {
 
     private float delay;
-    private float initialDelay = 4000;
+    private float initialDelay = 1000;
 
     public AddEnemySystem() {
         super();
