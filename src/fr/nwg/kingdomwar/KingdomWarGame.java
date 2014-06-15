@@ -5,9 +5,14 @@ import com.artemis.World;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
 import fr.nwg.kingdomwar.factory.RailFactory;
 import fr.nwg.kingdomwar.system.collision.handlers.DealDamageCollisionHandler;
 import fr.nwg.kingdomwar.system.foes.SpawnFoeSystem;
+import fr.nwg.kingdomwar.system.graphics.DrawingSpriteSystem;
 import fr.nwg.kingdomwar.system.tower.*;
 import fr.nwg.kingdomwar.system.collision.handlers.FillTargetListHandler;
 import fr.nwg.kingdomwar.world.KingdomWarData;
@@ -29,11 +34,16 @@ import fr.nwg.kingdomwar.system.graphics.debug.DisplayRailDebugSystem;
 import fr.nwg.kingdomwar.system.input.InputGarbageCollectorSystem;
 import fr.nwg.kingdomwar.system.misc.*;
 
+import java.util.ArrayList;
+
 public class KingdomWarGame implements ApplicationListener {
     private World world;
-
+    private TextureAtlas atlas;
     @Override
     public void create() {
+
+        atlas = new TextureAtlas("test.txt");
+
         world = new World();
         world.initialize();
         world.setManager(new GroupManager());
@@ -48,6 +58,8 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(new DrawingGridSystem());
         world.setSystem(new DrawingShapeSystem());
         world.setSystem(new DisplayLifeSystem());
+        world.setSystem(new DrawingSpriteSystem());
+
         world.setSystem(new MovingToDestinationSystem());
         world.setSystem(new MovingBulletSystem());
         world.setSystem(new LifeRemovalSystem());
@@ -108,6 +120,7 @@ public class KingdomWarGame implements ApplicationListener {
         world.getSystem(RemoveEntityFromWorldSystem.class).process();
         world.process();
         world.getSystem(InputGarbageCollectorSystem.class).process();
+
     }
 
     @Override
@@ -127,6 +140,7 @@ public class KingdomWarGame implements ApplicationListener {
 
     @Override
     public void dispose() {
-
+        world.dispose();
+        KingdomWarData.getInstance().dispose();
     }
 }

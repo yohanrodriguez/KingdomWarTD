@@ -16,4 +16,10 @@ public class Constants {
         public static final String GROUND_001 = "GROUND_001";
 
     }
+
+    public class Textures {
+        public static final String MONSTER_001 = "monster1";
+        public static final String MONSTER_002 = "monster2";
+        public static final String MONSTER_003 = "monster3";
+    }
 }

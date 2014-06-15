@@ -1,6 +1,11 @@
 package fr.nwg.kingdomwar.world;
 
+import com.artemis.Component;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.non_artemis.Grid;
@@ -17,8 +22,10 @@ import java.util.Map;
 
 public class KingdomWarData {
     private static KingdomWarData instance = null;
+    private TextureAtlas atlas;
 
     private ShapeRenderer shapeRenderer;
+    private SpriteBatch spriteBatch;
     private OrthographicCamera camera;
     private Grid grid;
     private Map<String, Rail> rails;
@@ -29,6 +36,8 @@ public class KingdomWarData {
         shapeRenderer = new ShapeRenderer();
         grid = new Grid(Constants.GRID_ROWS * 5, Constants.GRID_COLUMNS * 5, Constants.WORLD_HEIGHT, Constants.WORLD_HEIGHT);
         rails = new HashMap<String, Rail>();
+        atlas = new TextureAtlas("test.txt");
+        spriteBatch = new SpriteBatch();
     }
 
     public static synchronized KingdomWarData getInstance() {
@@ -40,6 +49,10 @@ public class KingdomWarData {
 
     public ShapeRenderer getShapeRenderer() {
         return shapeRenderer;
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
     }
 
     public OrthographicCamera getCamera() {
@@ -56,5 +69,14 @@ public class KingdomWarData {
 
     public Rail getRail(String railName) {
         return (rails.containsKey(railName)) ? rails.get(railName) : null;
+    }
+
+    public Sprite getSprite(String region) {
+        return atlas.createSprite(region);
+    }
+
+    public void dispose() {
+        this.atlas.dispose();
+        this.spriteBatch.dispose();
     }
 }
