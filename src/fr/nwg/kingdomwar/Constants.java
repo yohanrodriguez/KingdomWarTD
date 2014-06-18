@@ -21,5 +21,8 @@ public class Constants {
         public static final String MONSTER_001 = "monster1";
         public static final String MONSTER_002 = "monster2";
         public static final String MONSTER_003 = "monster3";
+        public static final String BULLET = "bullet";
+        public static final String TOWER = "tower";
+
     }
 }

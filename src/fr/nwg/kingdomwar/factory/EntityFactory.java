@@ -8,6 +8,7 @@ import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.component.BulletPowerComponent;
 import fr.nwg.kingdomwar.component.collision.CircleCollisionComponent;
 import fr.nwg.kingdomwar.component.graphics.DrawingComponent;
+import fr.nwg.kingdomwar.component.graphics.DrawingSpriteComponent;
 import fr.nwg.kingdomwar.component.graphics.SizeComponent;
 import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
 import fr.nwg.kingdomwar.component.misc.TimeToLiveComponent;
@@ -31,6 +32,7 @@ public class EntityFactory {
         tower.addComponent(new CircleCollisionComponent(positionComponent, 200));
         tower.addComponent(new TargetListComponent());
         tower.addComponent(new ShootFirstStrategyComponent());
+        tower.addComponent(new DrawingSpriteComponent(KingdomWarData.getInstance().getSprite(Constants.Textures.TOWER), new PositionComponent(positionComponent, size.width, size.height), size.width * 3, size.height * 3));
         GroupManager manager = world.getManager(GroupManager.class);
         manager.add(tower, Constants.Groups.TOWERS);
         tower.addToWorld();
@@ -48,10 +50,12 @@ public class EntityFactory {
 
         positionComponent.origin = position;
         bullet.addComponent(new CircleCollisionComponent(positionComponent, 5f));
+        bullet.addComponent(new DrawingSpriteComponent(KingdomWarData.getInstance().getSprite(Constants.Textures.BULLET), positionComponent, 10, 10));
         bullet.addComponent(positionComponent);
         bullet.addComponent(new SpeedComponent(500));
-        bullet.addComponent(new TimeToLiveComponent(10000));
+        bullet.addComponent(new TimeToLiveComponent(5000));
         bullet.addComponent(new VelocityComponent(positionComponent, aiming.position));
+
 
         GroupManager manager = world.getManager(GroupManager.class);
         manager.add(bullet, Constants.Groups.BULLET);

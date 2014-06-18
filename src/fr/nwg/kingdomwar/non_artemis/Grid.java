@@ -28,7 +28,7 @@ public class Grid {
 
         for(int i = 0; i < gridColumns; ++i)
             for(int j = 0; j < gridRows; ++j)
-                topo[i][j] = (Math.random() < 0.2) ? 0 : 1;
+                topo[i][j] = (Math.random() < 0.1) ? 0 : 1;
     }
 
     private SizeComponent getCellSizeFromWorldSize() {
@@ -44,11 +44,26 @@ public class Grid {
         return new PositionComponent(x, y);
     }
 
-    public void addEntityAt(Entity entity, int column, int row) {
-        Cell cell = this.getCellAt(column, row);
-        if (cell != null)
-            cells.remove(cell);
-        cells.add(new Cell(entity, column, row));
+    public void addEntityAt(Entity entity, int column, int row, int width, int height) {
+
+        int hw = (int) Math.floor(width / 2);
+        int hh = (int) Math.floor(height / 2);
+        int firstRow = (row - hh >= 0) ? row - hh : 0;
+        int firstColumn = (column - hw > 0) ? column - hw : 0;
+        int lastRow = firstRow + height;
+        int lastColumn = firstColumn + width;
+
+        // à dégager.
+        for (int c = firstColumn; c < lastColumn; c++) {
+            for (int r = firstRow; r < lastRow; r++) {
+                Cell cell = this.getCellAt(c, r);
+
+                if (cell != null)
+                    cells.remove(cell);
+                cells.add(new Cell(entity, c, r));
+            }
+        }
+
     }
 
     private Cell getCellAt(int column, int row) {
@@ -86,7 +101,31 @@ public class Grid {
         return width;
     }
 
-    public float getGridHeigth() {
+    public float getGridHeight() {
         return height;
+    }
+
+    public boolean isSpaceAvailable(int column, int row) {
+        return this.getCellAt(column, row) == null && this.getTopoAt(column, row) == 1;
+    }
+
+    public boolean isSpaceAvailable(int column, int row, int width, int height) {
+
+        int hw = (int) Math.floor(width / 2);
+        int hh = (int) Math.floor(height / 2);
+        int firstRow = (row - hh >= 0) ? row - hh : 0;
+        int firstColumn = (column - hw > 0) ? column - hw : 0;
+        int lastRow = firstRow + height;
+        int lastColumn = firstColumn + width;
+
+        if (lastRow >= this.rowCount || lastColumn >= this.columnsCount)
+            return false;
+
+        for (int c = firstColumn; c < lastColumn; c++)
+            for (int r = firstRow; r < lastRow; r++)
+                if (!isSpaceAvailable(c, r))
+                    return false;
+
+        return true;
     }
 }

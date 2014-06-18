@@ -40,7 +40,7 @@ public class DrawingSpriteSystem extends EntityProcessingSystem {
         PositionComponent position = positionComponent.get(entity);
         Sprite sprite = drawingSpriteComponent.sprite;
 //        sprite.setScale(0.5f, 2f);
-        sprite.setPosition(position.x - sprite.getWidth() / 2, position.y - sprite.getHeight() / 2);
+        sprite.setPosition(position.getRealPositionX() - sprite.getWidth() / 2, position.getRealPositionY() - sprite.getHeight() / 2);
         sprite.draw(spriteBatch);
     }
 

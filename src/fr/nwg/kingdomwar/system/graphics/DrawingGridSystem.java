@@ -34,7 +34,7 @@ public class DrawingGridSystem extends VoidEntitySystem {
         int nbrColumns = grid.getColumnsCount();
         int nbrRows = grid.getRowsCount();
         float widthColumn = grid.getGridWidth() / nbrColumns;
-        float heightRow = grid.getGridHeigth() / nbrRows;
+        float heightRow = grid.getGridHeight() / nbrRows;
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(new Color(0.8f, 0f, 0f, 0.1f));
@@ -54,7 +54,7 @@ public class DrawingGridSystem extends VoidEntitySystem {
         int nbrColumns = grid.getColumnsCount();
         int nbrRows = grid.getRowsCount();
         float widthColumn = grid.getGridWidth() / nbrColumns;
-        float heightRow = grid.getGridHeigth() / nbrRows;
+        float heightRow = grid.getGridHeight() / nbrRows;
         float columnPosition, rowPosition;
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -62,7 +62,7 @@ public class DrawingGridSystem extends VoidEntitySystem {
 
         for (int column = 0; column <= nbrColumns; column++) {
             columnPosition = column * widthColumn;
-            shapeRenderer.line(columnPosition, 0, columnPosition, grid.getGridHeigth());
+            shapeRenderer.line(columnPosition, 0, columnPosition, grid.getGridHeight());
             for (int row = 0; row <= nbrRows; row++) {
                 rowPosition = row * heightRow;
                 shapeRenderer.line(0, rowPosition, grid.getGridWidth(), rowPosition);

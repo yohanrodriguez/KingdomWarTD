@@ -34,12 +34,12 @@ public class PlacingSystem extends EntityProcessingSystem {
         int row = grid.getRowFromPosition(touchedUpPosition.getRealPositionY());
         int column = grid.getColumnFromPosition(touchedUpPosition.getRealPositionX());
 
-        if (row >= 0 && column >= 0 && row < grid.getRowsCount() && column < grid.getColumnsCount() && grid.getTopoAt(column, row) == 1) {
+        if (grid.isSpaceAvailable(column, row, 3, 3) && row >= 0 && column >= 0 && row < grid.getRowsCount() && column < grid.getColumnsCount() && grid.getTopoAt(column, row) == 1) {
             int x = column * grid.getCellSize().width;
             int y = row * grid.getCellSize().height;
             Vector3 victor = new Vector3(x, y, 0);
             Entity newTower = EntityFactory.createTowerEntity(world, victor, cursorPosition);
-            grid.addEntityAt(newTower, column, row);
+            grid.addEntityAt(newTower, column, row, 3, 3);
         }
     }
 }

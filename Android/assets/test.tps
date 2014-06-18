@@ -38,7 +38,7 @@
         <key>dataFormat</key>
         <string>libgdx</string>
         <key>textureFileName</key>
-        <filename></filename>
+        <filename>test.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -172,10 +172,12 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>monster1.png</filename>
             <filename>monster2.png</filename>
+            <filename>monster1.png</filename>
             <filename>monster3.png</filename>
-            <filename>monstertemplate.png</filename>
+            <filename>monster4.png</filename>
+            <filename>bullet.png</filename>
+            <filename>tower.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

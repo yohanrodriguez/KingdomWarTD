@@ -32,9 +32,15 @@ public class DisplayPositionDebugSystem extends EntityProcessingSystem {
     protected void process(Entity entity) {
 
         PositionComponent position = positionComponentMapper.get(entity);
+        PositionComponent parent = position.origin;
         float x = position.getRealPositionX();
         float y = position.getRealPositionY();
         float jp = 20;
+
+        if (parent != null) {
+            shapeRenderer.setColor(Color.GREEN);
+            shapeRenderer.line(x, y, parent.getRealPositionX(), parent.getRealPositionY());
+        }
 
         shapeRenderer.setColor(Color.PINK);
         shapeRenderer.line(x - jp, y, x + jp, y);
