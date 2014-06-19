@@ -8,9 +8,11 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import fr.nwg.kingdomwar.component.foes.DamageComponent;
 import fr.nwg.kingdomwar.component.foes.LifeComponent;
+import fr.nwg.kingdomwar.component.foes.RewardWhenDeadComponent;
 import fr.nwg.kingdomwar.component.misc.DeadEntityComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.ParticleFactory;
+import fr.nwg.kingdomwar.world.KingdomWarData;
 
 import javax.management.openmbean.CompositeType;
 
@@ -22,7 +24,11 @@ public class LifeRemovalSystem extends EntityProcessingSystem {
     @Mapper
     ComponentMapper<LifeComponent> lifeComponentMapper;
     @Mapper
+    ComponentMapper<PositionComponent> positionComponentMapper;
+    @Mapper
     ComponentMapper<DamageComponent> damageComponentMapper;
+    @Mapper
+    ComponentMapper<RewardWhenDeadComponent> rewardWhenDeadComponentMapper;
 
     public LifeRemovalSystem() {
         super(Aspect.getAspectForAll(DamageComponent.class, LifeComponent.class));
@@ -36,9 +42,16 @@ public class LifeRemovalSystem extends EntityProcessingSystem {
 
         if (life.life <= 0) {
             entity.addComponent(new DeadEntityComponent());
-            PositionComponent position = (PositionComponent) entity.getComponent(ComponentType.getTypeFor(PositionComponent.class));
+
+            RewardWhenDeadComponent rewardWhenDeadComponent = rewardWhenDeadComponentMapper.getSafe(entity);
+            if(rewardWhenDeadComponent != null) {
+                KingdomWarData.getInstance().playerScore += rewardWhenDeadComponent.points;
+                KingdomWarData.getInstance().playerThunes += rewardWhenDeadComponent.thunes;
+            }
+
+            PositionComponent position = positionComponentMapper.getSafe(entity);
             if (position != null) {
-                ParticleFactory.createExplosionOfParticles(world, position, 60, 500);
+                ParticleFactory.createExplosionOfParticles(world, position, 30, 500);
             }
         }
 

@@ -8,6 +8,8 @@ import fr.nwg.kingdomwar.component.DestinationReachedComponent;
 import fr.nwg.kingdomwar.component.RailComponent;
 import fr.nwg.kingdomwar.component.collision.CircleCollisionComponent;
 import fr.nwg.kingdomwar.component.foes.LifeComponent;
+import fr.nwg.kingdomwar.component.foes.PenaltyWhenWinComponent;
+import fr.nwg.kingdomwar.component.foes.RewardWhenDeadComponent;
 import fr.nwg.kingdomwar.component.graphics.DrawingComponent;
 import fr.nwg.kingdomwar.component.graphics.DrawingSpriteComponent;
 import fr.nwg.kingdomwar.component.graphics.DrawingTypeComponent;
@@ -24,8 +26,10 @@ public class EnemyFactory extends EntityFactory {
 
         Entity basicEnemy = world.createEntity();
         basicEnemy.addComponent(position);
+        basicEnemy.addComponent(new RewardWhenDeadComponent(10));
+        basicEnemy.addComponent(new PenaltyWhenWinComponent(5));
         basicEnemy.addComponent(new LifeComponent(150, 150));
-        basicEnemy.addComponent(new SpeedComponent((float) (50f + Math.random() * 10f)));
+        basicEnemy.addComponent(new SpeedComponent((float) (100f + Math.random() * 50f)));
         basicEnemy.addComponent(new DrawingTypeComponent(DrawingTypeComponent.DrawingType.ELLIPSE));
         SizeComponent size = new SizeComponent(20,20);
         basicEnemy.addComponent(size);

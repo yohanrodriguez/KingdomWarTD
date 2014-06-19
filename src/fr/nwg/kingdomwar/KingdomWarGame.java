@@ -12,11 +12,10 @@ import com.badlogic.gdx.utils.Array;
 import fr.nwg.kingdomwar.factory.RailFactory;
 import fr.nwg.kingdomwar.system.collision.handlers.DealDamageCollisionHandler;
 import fr.nwg.kingdomwar.system.foes.SpawnFoeSystem;
-import fr.nwg.kingdomwar.system.graphics.DrawingSpriteSystem;
+import fr.nwg.kingdomwar.system.graphics.*;
 import fr.nwg.kingdomwar.system.tower.*;
 import fr.nwg.kingdomwar.system.collision.handlers.FillTargetListHandler;
 import fr.nwg.kingdomwar.world.KingdomWarData;
-import fr.nwg.kingdomwar.system.graphics.DrawingGridSystem;
 import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EnemyFactory;
@@ -25,8 +24,6 @@ import fr.nwg.kingdomwar.input.MyInputProcessor;
 import fr.nwg.kingdomwar.system.collision.CollisionPair;
 import fr.nwg.kingdomwar.system.collision.CollisionSystem;
 import fr.nwg.kingdomwar.system.foes.LifeRemovalSystem;
-import fr.nwg.kingdomwar.system.graphics.DisplayLifeSystem;
-import fr.nwg.kingdomwar.system.graphics.DrawingShapeSystem;
 import fr.nwg.kingdomwar.system.graphics.debug.DisplayCollisionDebugSystem;
 import fr.nwg.kingdomwar.system.graphics.debug.DisplayPositionDebugSystem;
 import fr.nwg.kingdomwar.system.graphics.debug.DisplayRadiusDebugSystem;
@@ -68,7 +65,7 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(new DestinationReachedSystem());
         world.setSystem(new ShootFirstStrategySystem());
 
-        addDebugSystems();
+        //addDebugSystems();
         world.setSystem(new InputGarbageCollectorSystem(), false);
 
         // dernier système à appeler!!!
@@ -83,10 +80,11 @@ public class KingdomWarGame implements ApplicationListener {
         inputProcessor.addTouchedUpListener(inputEntity);
         Gdx.input.setInputProcessor(inputProcessor);
 
-        EntityFactory.createEntityPlacementShape(world, cursorPosition);
+//        EntityFactory.createEntityPlacementShape(world, cursorPosition);
 
         EnemyFactory.createBasicEnemy(world);
 
+        world.setSystem(new DrawHUDSystem());
     }
 
     private void setCollisions() {
@@ -115,7 +113,7 @@ public class KingdomWarGame implements ApplicationListener {
 
     @Override
     public void render() {
-        world.setDelta(Gdx.graphics.getDeltaTime() * 1000);
+        world.setDelta(Gdx.graphics.getDeltaTime() * 1000 * KingdomWarData.getInstance().timeScale);
         world.getSystem(PrepareProcessSystem.class).process();
         world.getSystem(RemoveEntityFromWorldSystem.class).process();
         world.process();

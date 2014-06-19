@@ -8,8 +8,11 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector3;
 import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
 import fr.nwg.kingdomwar.component.input.TouchedUpComponent;
+import fr.nwg.kingdomwar.component.misc.CostComponent;
+import fr.nwg.kingdomwar.component.misc.DeadEntityComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EntityFactory;
+import fr.nwg.kingdomwar.non_artemis.TowerType;
 import fr.nwg.kingdomwar.world.KingdomWarData;
 import fr.nwg.kingdomwar.non_artemis.Grid;
 
@@ -18,6 +21,8 @@ public class PlacingSystem extends EntityProcessingSystem {
     private final Grid grid;
     @Mapper
     private ComponentMapper<TouchedUpComponent> touchedUpComponentMapper;
+    @Mapper
+    private ComponentMapper<CostComponent> costComponenttMapper;
     //Temp following cursor
     @Mapper
     private ComponentMapper<CursorPositionComponent> cursorPositionComponentMapper;
@@ -34,12 +39,26 @@ public class PlacingSystem extends EntityProcessingSystem {
         int row = grid.getRowFromPosition(touchedUpPosition.getRealPositionY());
         int column = grid.getColumnFromPosition(touchedUpPosition.getRealPositionX());
 
-        if (grid.isSpaceAvailable(column, row, 3, 3) && row >= 0 && column >= 0 && row < grid.getRowsCount() && column < grid.getColumnsCount() && grid.getTopoAt(column, row) == 1) {
-            int x = column * grid.getCellSize().width;
-            int y = row * grid.getCellSize().height;
-            Vector3 victor = new Vector3(x, y, 0);
+        int cellWidth = grid.getCellSize().width;
+        int cellHeight = grid.getCellSize().height;
+        int x = column * cellWidth + cellWidth / 2;
+        int y = row * cellHeight + cellHeight / 2;
+        Vector3 victor = new Vector3(x, y, 0);
+
+        TowerType towerType = KingdomWarData.getInstance().getSelectedTowerType();
+
+        if (KingdomWarData.getInstance().canAfford(towerType.getBuildingCost()) &&
+            grid.isSpaceAvailable(column, row) &&
+            grid.isInside(column, row) &&
+            grid.getTopoAt(column, row) == 1) {
+
             Entity newTower = EntityFactory.createTowerEntity(world, victor, cursorPosition);
-            grid.addEntityAt(newTower, column, row, 3, 3);
+            grid.addEntityAt(newTower, column, row);
+            KingdomWarData.getInstance().playerThunes -= towerType.getBuildingCost();
+            //System.out.println("THUNES = " + KingdomWarData.getInstance().playerThunes);
+
+        } else {
+            //System.out.println("T'es pauvre connard ! ta bourse = " + KingdomWarData.getInstance().playerThunes);
         }
     }
 }

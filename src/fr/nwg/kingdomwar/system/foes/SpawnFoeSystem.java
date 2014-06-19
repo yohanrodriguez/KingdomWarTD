@@ -6,7 +6,7 @@ import fr.nwg.kingdomwar.factory.EnemyFactory;
 public class SpawnFoeSystem extends VoidEntitySystem {
 
     private float delay;
-    private float initialDelay = 2000;
+    private float initialDelay = 1500;
 
     public SpawnFoeSystem() {
         super();

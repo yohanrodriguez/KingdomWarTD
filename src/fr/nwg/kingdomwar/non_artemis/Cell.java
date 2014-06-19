@@ -8,7 +8,7 @@ public class Cell {
     public int column;
     public Entity entity;
 
-    public Cell(Entity entity, int row, int column) {
+    public Cell(Entity entity, int column, int row) {
         this.row = row;
         this.column = column;
         this.entity = entity;

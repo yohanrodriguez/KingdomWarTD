@@ -3,6 +3,7 @@ package fr.nwg.kingdomwar.non_artemis;
 import com.artemis.Entity;
 import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.component.graphics.SizeComponent;
+import fr.nwg.kingdomwar.component.misc.DestinationComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class Grid {
     private int columnsCount;
 
     private List<Cell> cells;
-    private int[][] topo;
+    private int[][] placementLayer;
 
     public Grid(int gridRows, int gridColumns, float gridWidth, float gridHeight) {
         this.rowCount = gridRows;
@@ -24,11 +25,12 @@ public class Grid {
         width = gridWidth;
         height = gridHeight;
         cells = new ArrayList<Cell>();
-        topo = new int[gridColumns][gridRows];
+        placementLayer = new int[gridColumns][gridRows];
 
         for(int i = 0; i < gridColumns; ++i)
-            for(int j = 0; j < gridRows; ++j)
-                topo[i][j] = (Math.random() < 0.1) ? 0 : 1;
+            for(int j = 0; j < gridRows; ++j) {
+                placementLayer[i][j] = 1;
+            }
     }
 
     private SizeComponent getCellSizeFromWorldSize() {
@@ -44,26 +46,12 @@ public class Grid {
         return new PositionComponent(x, y);
     }
 
-    public void addEntityAt(Entity entity, int column, int row, int width, int height) {
-
-        int hw = (int) Math.floor(width / 2);
-        int hh = (int) Math.floor(height / 2);
-        int firstRow = (row - hh >= 0) ? row - hh : 0;
-        int firstColumn = (column - hw > 0) ? column - hw : 0;
-        int lastRow = firstRow + height;
-        int lastColumn = firstColumn + width;
-
-        // à dégager.
-        for (int c = firstColumn; c < lastColumn; c++) {
-            for (int r = firstRow; r < lastRow; r++) {
-                Cell cell = this.getCellAt(c, r);
-
-                if (cell != null)
-                    cells.remove(cell);
-                cells.add(new Cell(entity, c, r));
-            }
+    public void addEntityAt(Entity entity, int column, int row) {
+        Cell cell = this.getCellAt(column, row);
+        if (cell != null) {
+            cells.remove(cell);
         }
-
+        cells.add(new Cell(entity, column, row));
     }
 
     private Cell getCellAt(int column, int row) {
@@ -86,7 +74,7 @@ public class Grid {
     }
 
     public int getTopoAt(int column, int row) {
-        return topo[column][row];
+        return placementLayer[column][row];
     }
 
     public int getColumnsCount() {
@@ -106,26 +94,37 @@ public class Grid {
     }
 
     public boolean isSpaceAvailable(int column, int row) {
-        return this.getCellAt(column, row) == null && this.getTopoAt(column, row) == 1;
+        return isInside(column, row) && getCellAt(column, row) == null && getTopoAt(column, row) == 1;
     }
 
-    public boolean isSpaceAvailable(int column, int row, int width, int height) {
+    public boolean isInside(int column, int row) {
+        return row >= 0 && column >= 0 && row < getRowsCount() && column < getColumnsCount();
+    }
 
-        int hw = (int) Math.floor(width / 2);
-        int hh = (int) Math.floor(height / 2);
-        int firstRow = (row - hh >= 0) ? row - hh : 0;
-        int firstColumn = (column - hw > 0) ? column - hw : 0;
-        int lastRow = firstRow + height;
-        int lastColumn = firstColumn + width;
+    public void setTopo(Rail rail) {
+        DestinationComponent previousDestination = null;
+        for(DestinationComponent destination : rail.getAllDestinations()) {
+            int row = this.getRowFromPosition(destination.y);
+            int column = this.getColumnFromPosition(destination.x);
 
-        if (lastRow >= this.rowCount || lastColumn >= this.columnsCount)
-            return false;
+            if (previousDestination != null) {
+                int previousRow = this.getRowFromPosition(previousDestination.y);
+                int previousColumn = this.getColumnFromPosition(previousDestination.x);
+                drawFromTo(column, row, previousColumn, previousRow);
+            }
+            previousDestination = destination;
+        }
+    }
 
-        for (int c = firstColumn; c < lastColumn; c++)
-            for (int r = firstRow; r < lastRow; r++)
-                if (!isSpaceAvailable(c, r))
-                    return false;
-
-        return true;
+    private void drawFromTo(int columnA, int rowA, int columnB, int rowB) {
+        int minX = (columnA > columnB) ? columnB : columnA;
+        int maxX = (columnA > columnB) ? columnA : columnB;
+        int minY = (rowA > rowB) ? rowB : rowA;
+        int maxY = (rowA > rowB) ? rowA : rowB;
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                this.placementLayer[x][y] = 0;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ import fr.nwg.kingdomwar.component.graphics.DrawingComponent;
 import fr.nwg.kingdomwar.component.graphics.DrawingSpriteComponent;
 import fr.nwg.kingdomwar.component.graphics.SizeComponent;
 import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
+import fr.nwg.kingdomwar.component.misc.CostComponent;
 import fr.nwg.kingdomwar.component.misc.TimeToLiveComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.component.physic.SpeedComponent;
@@ -27,12 +28,12 @@ public class EntityFactory {
 
         tower.addComponent(size);
         tower.addComponent(positionComponent);
-        tower.addComponent(new DrawingComponent(255, 255, 255, 1));
+//        tower.addComponent(new DrawingComponent(255, 255, 255, 1));
         tower.addComponent(new FiringRateComponent(200));
         tower.addComponent(new CircleCollisionComponent(positionComponent, 200));
         tower.addComponent(new TargetListComponent());
         tower.addComponent(new ShootFirstStrategyComponent());
-        tower.addComponent(new DrawingSpriteComponent(KingdomWarData.getInstance().getSprite(Constants.Textures.TOWER), new PositionComponent(positionComponent, size.width, size.height), size.width * 3, size.height * 3));
+        tower.addComponent(new DrawingSpriteComponent(KingdomWarData.getInstance().getSprite(Constants.Textures.TOWER), new PositionComponent(positionComponent, size.width, size.height), size.width, size.height));
         GroupManager manager = world.getManager(GroupManager.class);
         manager.add(tower, Constants.Groups.TOWERS);
         tower.addToWorld();
@@ -46,7 +47,7 @@ public class EntityFactory {
         bullet.addComponent(new SizeComponent(5, 5));
         bullet.addComponent(new BulletPowerComponent(5));
 
-        PositionComponent positionComponent = new PositionComponent(position, size.width/2, size.height/2);
+        PositionComponent positionComponent = new PositionComponent(position);
 
         positionComponent.origin = position;
         bullet.addComponent(new CircleCollisionComponent(positionComponent, 5f));

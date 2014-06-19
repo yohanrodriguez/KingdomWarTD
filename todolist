@@ -14,10 +14,17 @@
     - Placement sur zone autorisée              DONE!
     - changer la couleur case non allowed       DONE!
     - Détecter ennemi (zone perception)         DONE!
-    - decaler vie ennemis
-    - layers
-    - Scoring
-    - gestion fin de partie
-    - Simulation drag and drop
+    - decaler vie ennemis                       DONE!
+    - BOUUUUUM ennemi you die bitch             DONE!
+    - Scoring                                   DONE!
+    - gagner un peu de thune, quand un ennemi crève. DONE!
+    - perdre de la vie lorsqu'un ennemi arrive à la fin du chemin. DONE!
+    - gestion fin de partie                         DONE!
+    - dépenser des sous pour poser des tours.       DONE!
+    - Corriger la position des tours sur la grille. DONE!
+    - Afficher HUD
+
     - charger une map à partir d'un fichier
-    - BOUUUUUM ennemi you die bitch
+    - layers
+    - rendre la carte un poil plus sympa
+    - Simulation drag and drop

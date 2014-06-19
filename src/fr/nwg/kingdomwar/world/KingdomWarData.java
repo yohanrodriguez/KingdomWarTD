@@ -3,13 +3,16 @@ package fr.nwg.kingdomwar.world;
 import com.artemis.Component;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.nwg.kingdomwar.Constants;
 import fr.nwg.kingdomwar.non_artemis.Grid;
+import fr.nwg.kingdomwar.non_artemis.LibgdxUtils;
 import fr.nwg.kingdomwar.non_artemis.Rail;
+import fr.nwg.kingdomwar.non_artemis.TowerType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,23 +24,36 @@ import java.util.Map;
  */
 
 public class KingdomWarData {
-    private static KingdomWarData instance = null;
-    private TextureAtlas atlas;
+    public int playerScore;
+    public int playerLifePoints;
+    public int playerThunes;
 
+    private static KingdomWarData instance = null;
+
+    private TextureAtlas atlas;
     private ShapeRenderer shapeRenderer;
-    private SpriteBatch spriteBatch;
+    public SpriteBatch spriteBatch;
     private OrthographicCamera camera;
     private Grid grid;
     private Map<String, Rail> rails;
+    private TowerType currentTowerType;
+    public float timeScale = 1;
+    public BitmapFont font;
 
     private KingdomWarData() {
         camera = new OrthographicCamera(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
         camera.setToOrtho(false);
         shapeRenderer = new ShapeRenderer();
-        grid = new Grid(Constants.GRID_ROWS * 5, Constants.GRID_COLUMNS * 5, Constants.WORLD_HEIGHT, Constants.WORLD_HEIGHT);
+        grid = new Grid(Constants.GRID_ROWS, Constants.GRID_COLUMNS, Constants.WORLD_HEIGHT, Constants.WORLD_HEIGHT);
         rails = new HashMap<String, Rail>();
         atlas = new TextureAtlas("test.txt");
         spriteBatch = new SpriteBatch();
+        font = LibgdxUtils.createFont("calibri.png", "calibri.fnt", "fonts");
+        playerScore = 0;
+        playerLifePoints = 200;
+        playerThunes = 400;
+        currentTowerType = new TowerType();
+        currentTowerType.setBuildingCost(125).setFiringRate(250);
     }
 
     public static synchronized KingdomWarData getInstance() {
@@ -65,6 +81,7 @@ public class KingdomWarData {
 
     public void addRail(String railName, Rail rail) {
         rails.put(railName, rail);
+        grid.setTopo(rail);
     }
 
     public Rail getRail(String railName) {
@@ -76,7 +93,19 @@ public class KingdomWarData {
     }
 
     public void dispose() {
-        this.atlas.dispose();
-        this.spriteBatch.dispose();
+        atlas.dispose();
+        spriteBatch.dispose();
+    }
+
+    public boolean canAfford(int amount) {
+        return this.playerThunes >= amount;
+    }
+
+    public TowerType getSelectedTowerType() {
+        return currentTowerType;
+    }
+
+    public void changeCurrentTowerType(TowerType towerType) {
+        currentTowerType = towerType;
     }
 }
