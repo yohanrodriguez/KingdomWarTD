@@ -6,7 +6,7 @@ import fr.nwg.kingdomwar.factory.EnemyFactory;
 public class SpawnFoeSystem extends VoidEntitySystem {
 
     private float delay;
-    private float initialDelay = 1500;
+    private float initialDelay = 3000;
 
     public SpawnFoeSystem() {
         super();
@@ -17,6 +17,8 @@ public class SpawnFoeSystem extends VoidEntitySystem {
     protected void processSystem() {
         delay -= world.getDelta();
         if(delay <= 0) {
+            if (Math.random() < 0.2)
+                EnemyFactory.createToughEnemy(world);
             EnemyFactory.createBasicEnemy(world);
             delay = initialDelay;
         }

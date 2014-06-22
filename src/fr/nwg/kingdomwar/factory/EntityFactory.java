@@ -29,7 +29,7 @@ public class EntityFactory {
         tower.addComponent(size);
         tower.addComponent(positionComponent);
 //        tower.addComponent(new DrawingComponent(255, 255, 255, 1));
-        tower.addComponent(new FiringRateComponent(200));
+        tower.addComponent(new FiringRateComponent(600));
         tower.addComponent(new CircleCollisionComponent(positionComponent, 200));
         tower.addComponent(new TargetListComponent());
         tower.addComponent(new ShootFirstStrategyComponent());
@@ -45,7 +45,7 @@ public class EntityFactory {
         SizeComponent size = KingdomWarData.getInstance().getGrid().getCellSize();
         bullet.addComponent(new DrawingComponent(255, 0, 0, 1));
         bullet.addComponent(new SizeComponent(5, 5));
-        bullet.addComponent(new BulletPowerComponent(5));
+        bullet.addComponent(new BulletPowerComponent(10));
 
         PositionComponent positionComponent = new PositionComponent(position);
 
