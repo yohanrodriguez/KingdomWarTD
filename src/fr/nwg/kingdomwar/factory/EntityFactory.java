@@ -53,8 +53,8 @@ public class EntityFactory {
         bullet.addComponent(new CircleCollisionComponent(positionComponent, 5f));
         bullet.addComponent(new DrawingSpriteComponent(KingdomWarData.getInstance().getSprite(Constants.Textures.BULLET), positionComponent, 10, 10));
         bullet.addComponent(positionComponent);
-        bullet.addComponent(new SpeedComponent(500));
-        bullet.addComponent(new TimeToLiveComponent(5000));
+        bullet.addComponent(new SpeedComponent(750));
+        bullet.addComponent(new TimeToLiveComponent(2000));
         bullet.addComponent(new VelocityComponent(positionComponent, aiming.position));
 
 

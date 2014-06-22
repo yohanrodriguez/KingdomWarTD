@@ -54,8 +54,9 @@ public class KingdomWarGame implements ApplicationListener {
         world.setSystem(new PlacingSystem());
         world.setSystem(new DrawingGridSystem());
         world.setSystem(new DrawingShapeSystem());
-        world.setSystem(new DisplayLifeSystem());
         world.setSystem(new DrawingSpriteSystem());
+        world.setSystem(new DrawingTextSystem());
+        world.setSystem(new DisplayLifeSystem());
 
         world.setSystem(new MovingToDestinationSystem());
         world.setSystem(new MovingBulletSystem());
@@ -68,7 +69,6 @@ public class KingdomWarGame implements ApplicationListener {
         //addDebugSystems();
         world.setSystem(new InputGarbageCollectorSystem(), false);
 
-        // dernier système à appeler!!!
         world.setSystem(new CleanTowersTargetListsSystem());
         world.setSystem(new RemoveEntityFromWorldSystem(), false);
 

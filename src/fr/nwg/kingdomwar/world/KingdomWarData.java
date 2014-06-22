@@ -1,8 +1,6 @@
 package fr.nwg.kingdomwar.world;
 
-import com.artemis.Component;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,7 +24,7 @@ import java.util.Map;
 public class KingdomWarData {
     public int playerScore;
     public int playerLifePoints;
-    public int playerThunes;
+    public int playerMoney;
 
     private static KingdomWarData instance = null;
 
@@ -51,7 +49,7 @@ public class KingdomWarData {
         font = LibgdxUtils.createFont("calibri.png", "calibri.fnt", "fonts");
         playerScore = 0;
         playerLifePoints = 200;
-        playerThunes = 400;
+        playerMoney = 400;
         currentTowerType = new TowerType();
         currentTowerType.setBuildingCost(125).setFiringRate(250);
     }
@@ -98,7 +96,7 @@ public class KingdomWarData {
     }
 
     public boolean canAfford(int amount) {
-        return this.playerThunes >= amount;
+        return this.playerMoney >= amount;
     }
 
     public TowerType getSelectedTowerType() {

@@ -10,10 +10,16 @@ import fr.nwg.kingdomwar.world.KingdomWarData;
  * Created by eptwalabha on 19/06/2014.
  */
 public class DrawHUDSystem extends VoidEntitySystem {
+
+    private SpriteBatch spriteBatch;
+
+    public DrawHUDSystem() {
+        this.spriteBatch = KingdomWarData.getInstance().spriteBatch;
+    }
+
     @Override
     protected void processSystem() {
         KingdomWarData instance = KingdomWarData.getInstance();
-        SpriteBatch spriteBatch = instance.spriteBatch;
         BitmapFont font = instance.font;
 
         spriteBatch.begin();
@@ -22,7 +28,7 @@ public class DrawHUDSystem extends VoidEntitySystem {
         font.setColor(Color.RED);
         font.draw(spriteBatch, "<3 : " + instance.playerLifePoints, x, 550);
         font.setColor(Color.GREEN);
-        font.draw(spriteBatch, "$$ : " + instance.playerThunes, x, 500);
+        font.draw(spriteBatch, "$$ : " + instance.playerMoney, x, 500);
         font.setColor(Color.YELLOW);
         font.draw(spriteBatch, "XP : " + instance.playerScore, x, 450);
         if(instance.timeScale == 0) {

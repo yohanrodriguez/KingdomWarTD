@@ -7,7 +7,7 @@ import com.artemis.Component;
  */
 public class RewardWhenDeadComponent extends Component {
     public int points = 0;
-    public int thunes = 50;
+    public int money = 50;
 
     public RewardWhenDeadComponent(int points) {
         this.points = points;

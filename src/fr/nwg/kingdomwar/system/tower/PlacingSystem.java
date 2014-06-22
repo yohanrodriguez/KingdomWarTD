@@ -2,6 +2,7 @@ package fr.nwg.kingdomwar.system.tower;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
+import com.artemis.ComponentType;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
@@ -9,9 +10,9 @@ import com.badlogic.gdx.math.Vector3;
 import fr.nwg.kingdomwar.component.input.CursorPositionComponent;
 import fr.nwg.kingdomwar.component.input.TouchedUpComponent;
 import fr.nwg.kingdomwar.component.misc.CostComponent;
-import fr.nwg.kingdomwar.component.misc.DeadEntityComponent;
 import fr.nwg.kingdomwar.component.physic.PositionComponent;
 import fr.nwg.kingdomwar.factory.EntityFactory;
+import fr.nwg.kingdomwar.factory.ItemMenuFactory;
 import fr.nwg.kingdomwar.non_artemis.TowerType;
 import fr.nwg.kingdomwar.world.KingdomWarData;
 import fr.nwg.kingdomwar.non_artemis.Grid;
@@ -53,12 +54,10 @@ public class PlacingSystem extends EntityProcessingSystem {
             grid.getTopoAt(column, row) == 1) {
 
             Entity newTower = EntityFactory.createTowerEntity(world, victor, cursorPosition);
+            PositionComponent towerPosition = (PositionComponent) newTower.getComponent(ComponentType.getTypeFor(PositionComponent.class));
             grid.addEntityAt(newTower, column, row);
-            KingdomWarData.getInstance().playerThunes -= towerType.getBuildingCost();
-            //System.out.println("THUNES = " + KingdomWarData.getInstance().playerThunes);
-
-        } else {
-            //System.out.println("T'es pauvre connard ! ta bourse = " + KingdomWarData.getInstance().playerThunes);
+            KingdomWarData.getInstance().playerMoney -= towerType.getBuildingCost();
+            ItemMenuFactory.createNegativePointIndicator(world, towerPosition, "-" + towerType.getBuildingCost() + "$");
         }
     }
 }
